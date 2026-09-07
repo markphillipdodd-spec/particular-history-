@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Compare Creeds &middot; Particular History</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="wrap">
+  <div class="brand"><a href="index.html">Particular History</a></div>
+  <nav class="site-nav">
+    <a href="index.html">Home</a>
+    <a href="church.html">Church</a>
+    <a href="revelation.html">Revelation</a>
+    <a href="compare.html" class="active">Compare Creeds</a>
+    <a href="circles.html">Family Map</a>
+  </nav>
+
+  <header class="page-head">
+    <div class="eyebrow">Read them in their own words</div>
+    <h1>Compare Creeds</h1>
+    <p>Choose a topic and two documents. These texts are centuries old and in the public domain, so you're reading the actual words, not a summary.</p>
+  </header>
+
+  <div class="compare-controls">
+    <select id="topic"></select>
+    <select id="docA"></select>
+    <select id="docB"></select>
+  </div>
+
+  <div class="compare-grid">
+    <div class="compare-col" id="colA"></div>
+    <div class="compare-col" id="colB"></div>
+  </div>
+
+  <footer class="site-footer">a prototype &middot; excerpts are historic public-domain texts</footer>
+</div>
+
+<script>
+const DOCS = {
+  nicene: { name: "Nicene-Constantinopolitan Creed", year: "325 / 381" },
+  chalcedon: { name: "Chalcedonian Definition", year: "451" },
+  belgic: { name: "Belgic Confession", year: "1561" },
+  westminster: { name: "Westminster Confession", year: "1646" },
+  savoy: { name: "Savoy Declaration", year: "1658" },
+  lbc1689: { name: "Second London Confession", year: "1689" }
+};
+
+const TOPICS = {
+  trinity: {
+    label: "The Trinity",
+    quotes: {
+      nicene: "We believe in one God, the Father Almighty... And in one Lord Jesus Christ, the only-begotten Son of God... And in the Holy Spirit, the Lord and Giver of Life, who proceeds from the Father, who with the Father and the Son together is worshipped and glorified.",
+      westminster: "In the unity of the Godhead there be three persons of one substance, power, and eternity: God the Father, God the Son, and God the Holy Ghost.",
+      lbc1689: "In this divine and infinite Being there are three subsistences, the Father, the Word, and Holy Spirit, of one substance, power, and eternity, each having the whole divine essence."
+    }
+  },
+  christ: {
+    label: "The Person of Christ",
+    quotes: {
+      chalcedon: "One and the same Christ, Son, Lord, only-begotten, to be acknowledged in two natures, without confusion, without change, without division, without separation.",
+      westminster: "Two whole, perfect, and distinct natures were inseparably joined together in one person, without conversion, composition, or confusion.",
+      lbc1689: "So that two whole, perfect, and distinct natures were inseparably joined together in one person, without conversion, composition, or confusion."
+    }
+  },
+  scripture: {
+    label: "The Authority of Scripture",
+    quotes: {
+      belgic: "We receive all these books, and these only, as holy and canonical, for the regulating, founding, and establishing of our faith.",
+      westminster: "The authority of the Holy Scripture... dependeth not upon the testimony of any man or Church, but wholly upon God, the author thereof.",
+      lbc1689: "The authority of the Holy Scripture... dependeth not upon the testimony of any man or church, but wholly upon God the author thereof."
+    }
+  },
+  covenant: {
+    label: "The Covenant of Grace",
+    quotes: {
+      westminster: "The Lord was pleased to make a second covenant, commonly called the covenant of grace: wherein he freely offereth unto sinners life and salvation by Jesus Christ.",
+      lbc1689: "This covenant is revealed in the gospel; first of all in the promise of salvation to Adam... afterwards, by farther steps, until the full discovery thereof was completed in the New Testament."
+    }
+  },
+  baptism: {
+    label: "The Subjects of Baptism",
+    quotes: {
+      westminster: "Not only those that do actually profess faith in and obedience unto Christ, but also the infants of one or both believing parents, are to be baptized.",
+      lbc1689: "Those who do actually profess repentance towards God, faith in, and obedience to our Lord Jesus Christ, are the only proper subjects of this ordinance."
+    }
+  }
+};
+
+const topicSel = document.getElementById('topic');
+const docASel = document.getElementById('docA');
+const docBSel = document.getElementById('docB');
+
+Object.entries(TOPICS).forEach(([key, t]) => {
+  const opt = document.createElement('option');
+  opt.value = key; opt.textContent = t.label;
+  topicSel.appendChild(opt);
+});
+
+function populateDocs(select, defaultKey){
+  Object.entries(DOCS).forEach(([key, d]) => {
+    const opt = document.createElement('option');
+    opt.value = key; opt.textContent = `${d.name} (${d.year})`;
+    select.appendChild(opt);
+  });
+  select.value = defaultKey;
+}
+populateDocs(docASel, 'westminster');
+populateDocs(docBSel, 'lbc1689');
+
+function render(){
+  const topicKey = topicSel.value;
+  const topic = TOPICS[topicKey];
+  [ ['colA', docASel.value], ['colB', docBSel.value] ].forEach(([colId, docKey]) => {
+    const doc = DOCS[docKey];
+    const quote = topic.quotes[docKey];
+    const col = document.getElementById(colId);
+    col.innerHTML = `
+      <h3>${doc.name}</h3>
+      <span class="src-year">A.D. ${doc.year}</span>
+      ${ quote
+        ? `<blockquote>&ldquo;${quote}&rdquo;</blockquote>`
+        : `<p class="compare-note">This document does not address &ldquo;${topic.label}&rdquo; as a distinct topic &mdash; it wasn't yet a live question, or the point was assumed rather than stated.</p>` }
+    `;
+  });
+}
+
+[topicSel, docASel, docBSel].forEach(sel => sel.addEventListener('change', render));
+topicSel.value = 'covenant';
+render();
+</script>
+</body>
+</html>

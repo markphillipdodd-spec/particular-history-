@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Theological Family Map &middot; Particular History</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="wrap">
+  <div class="brand"><a href="index.html">Particular History</a></div>
+  <nav class="site-nav">
+    <a href="index.html">Home</a>
+    <a href="church.html">Church</a>
+    <a href="revelation.html">Revelation</a>
+    <a href="compare.html">Compare Creeds</a>
+    <a href="circles.html" class="active">Family Map</a>
+  </nav>
+
+  <header class="page-head">
+    <div class="eyebrow">Five circles of confessional identity</div>
+    <h1>Theological Family Map</h1>
+    <p>Each circle narrows the last &mdash; from the broadest trinitarian consensus down to the specific confessional stream this site traces. Tap a circle to see who's included and what distinguishes it.</p>
+  </header>
+
+  <div class="circle-diagram">
+    <svg viewBox="0 0 300 300" role="img" aria-label="Five concentric circles narrowing from Nicene Christianity to Particular Baptist Confessionalism">
+      <circle class="ring" data-index="0" cx="150" cy="150" r="140" fill="#efe9d6" tabindex="0" role="button" aria-label="Circle 1: Nicene Christianity"></circle>
+      <circle class="ring" data-index="1" cx="150" cy="150" r="112" fill="#e2d1a4" tabindex="0" role="button" aria-label="Circle 2: Reformation Christianity"></circle>
+      <circle class="ring" data-index="2" cx="150" cy="150" r="84"  fill="#d4b876" tabindex="0" role="button" aria-label="Circle 3: Reformed Christianity"></circle>
+      <circle class="ring" data-index="3" cx="150" cy="150" r="56"  fill="#c49f52" tabindex="0" role="button" aria-label="Circle 4: English Congregationalism"></circle>
+      <circle class="ring" data-index="4" cx="150" cy="150" r="28"  fill="#b3843a" tabindex="0" role="button" aria-label="Circle 5: Particular Baptist Confessionalism"></circle>
+
+      <text class="ring-label" x="150" y="26" text-anchor="middle" font-size="11">Nicene</text>
+      <text class="ring-label" x="150" y="54" text-anchor="middle" font-size="11">Reformation</text>
+      <text class="ring-label" x="150" y="82" text-anchor="middle" font-size="11">Reformed</text>
+      <text class="ring-label" x="150" y="108" text-anchor="middle" font-size="9.5">Congregational</text>
+      <text class="ring-label" x="150" y="146" text-anchor="middle" font-size="9">Particular</text>
+      <text class="ring-label" x="150" y="157" text-anchor="middle" font-size="9">Baptist</text>
+    </svg>
+  </div>
+
+  <div class="circle-detail" id="detail">
+    <p class="detail-empty">Tap a circle above to explore it.</p>
+  </div>
+
+  <footer class="site-footer">a prototype &middot; tap any circle</footer>
+</div>
+
+<script>
+const DATA = [
+  {
+    name: "Nicene Christianity",
+    scope: "Circle 1 &middot; the broadest circle",
+    parties: "Eastern Orthodox, Roman Catholic, Oriental Orthodox, Assyrian traditions, Protestant churches.",
+    marker: "Trinitarian confession: one God in three persons; Christ fully God and fully man.",
+    color: "#efe9d6"
+  },
+  {
+    name: "Reformation Christianity",
+    scope: "Circle 2",
+    parties: "Lutherans, Reformed, Anglicans, Methodists, Baptists, Anabaptists.",
+    marker: "Scripture as final authority, and justification by faith alone.",
+    color: "#e2d1a4"
+  },
+  {
+    name: "Reformed Christianity",
+    scope: "Circle 3 &middot; the middle circle",
+    parties: "Continental Reformed, Presbyterians, Dutch Reformed, Puritans.",
+    marker: "Covenant theology as the organizing framework of Scripture.",
+    color: "#d4b876"
+  },
+  {
+    name: "English Congregationalism",
+    scope: "Circle 4",
+    parties: "Separatists, Independents, Congregationalists.",
+    marker: "A gathered church of professing believers, governed by the local congregation.",
+    color: "#c49f52"
+  },
+  {
+    name: "Particular Baptist Confessionalism",
+    scope: "Circle 5 &middot; the innermost circle",
+    parties: "17th-century Particular Baptists, 1689 Federalists, modern Reformed Baptists.",
+    marker: "The covenant of grace is the new covenant established in Christ, revealed beforehand through promise and type.",
+    color: "#b3843a"
+  }
+];
+
+const rings = document.querySelectorAll('.ring');
+const detail = document.getElementById('detail');
+
+function selectIndex(i){
+  const d = DATA[i];
+  rings.forEach(r => {
+    const idx = Number(r.dataset.index);
+    r.classList.toggle('selected', idx === i);
+    r.style.opacity = idx === i ? '1' : '0.85';
+  });
+  detail.innerHTML = `
+    <div class="detail-eyebrow">${d.scope}</div>
+    <h2>${d.name}</h2>
+    <div class="field plain">
+      <span class="field-label">Parties Included</span>
+      <div class="field-body">${d.parties}</div>
+    </div>
+    <div class="field confession" style="--dotcolor:${d.color}">
+      <span class="field-label">Distinctive Marker</span>
+      <div class="field-body">${d.marker}</div>
+    </div>
+  `;
+}
+
+rings.forEach(r => {
+  const activate = () => selectIndex(Number(r.dataset.index));
+  r.addEventListener('click', activate);
+  r.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' '){ e.preventDefault(); activate(); }
+  });
+});
+</script>
+</body>
+</html>
