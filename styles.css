@@ -488,6 +488,55 @@ blockquote{
 }
 .card-tag b{ color: var(--gold-dim); font-weight: 500; }
 
+.old-covenant-block{
+  border: 1px solid var(--teal-dim);
+  border-radius: 10px;
+  padding: 1.4rem 1.2rem;
+  margin-bottom: 1.5rem;
+}
+.old-covenant-title{
+  text-align:center;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 1.1rem;
+}
+.branch-stem{
+  width: 2px;
+  height: 20px;
+  background: var(--teal-dim);
+  margin: 0 auto;
+}
+.branch-bar{
+  width: 70%;
+  max-width: 260px;
+  height: 2px;
+  background: var(--teal-dim);
+  margin: 0 auto;
+}
+.branch-stems-down{
+  width: 70%;
+  max-width: 260px;
+  display:flex;
+  justify-content: space-between;
+  margin: 0 auto;
+}
+.branch-stems-down span{
+  width: 2px;
+  height: 18px;
+  background: var(--teal-dim);
+  display:block;
+}
+.branch-row{
+  display:flex;
+  gap: 0.8rem;
+  margin-top: 0;
+}
+.branch-row .card{ flex: 1 1 0; padding: 1rem 0.9rem; }
+.branch-row .card h2{ font-size: 1.2rem; }
+
 footer.site-footer{
   text-align:center;
   margin-top: 3.5rem;
