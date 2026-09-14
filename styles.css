@@ -537,6 +537,28 @@ blockquote{
 .branch-row .card{ flex: 1 1 0; padding: 1rem 0.9rem; }
 .branch-row .card h2{ font-size: 1.2rem; }
 
+.primary-text{
+  font-size: 1rem;
+  line-height: 1.85;
+  color: var(--parchment);
+}
+.primary-text p{ margin-bottom: 1.3rem; }
+.source-note{
+  margin-top: 2.2rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--teal-dim);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.02em;
+  color: var(--parchment-dim);
+  line-height: 1.6;
+}
+.text-status-pending{
+  color: var(--parchment-dim);
+  font-style: italic;
+  font-size: 0.9rem;
+}
+
 footer.site-footer{
   text-align:center;
   margin-top: 3.5rem;
