@@ -175,6 +175,11 @@ DATA.forEach((d) => {
           <span class="field-label">Downstream Influence</span>
           <div class="field-body">${d.influence}</div>
         </div>
+        ${d.slug !== 'wycliffe-lollards' ? `
+        <a class="resource-item" href="texts/${d.slug}.html" style="margin-top:1rem;">
+          <span class="resource-meta">Primary source</span>
+          <span class="resource-title">Read the Full Text &rarr;</span>
+        </a>` : ''}
       </div>
     </div>
   `;
