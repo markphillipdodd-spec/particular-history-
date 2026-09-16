@@ -559,6 +559,93 @@ blockquote{
   font-size: 0.9rem;
 }
 
+/* ---- Confession full-text page ---- */
+.expand-all-btn{
+  display:block;
+  margin: 0 auto 2.6rem;
+  background: transparent;
+  border: 1px solid var(--gold-dim);
+  color: var(--gold);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.55rem 1.3rem;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+.expand-all-btn:hover,
+.expand-all-btn:focus-visible{ border-color: var(--gold); color: var(--parchment); outline: none; }
+
+#chapters{ border-top: 1px solid var(--teal-dim); }
+
+details.chapter{ border-bottom: 1px solid var(--teal-dim); }
+
+details.chapter summary{
+  list-style: none;
+  cursor: pointer;
+  display: flex;
+  align-items: baseline;
+  gap: 0.9rem;
+  padding: 1.15rem 1.6rem 1.15rem 0.1rem;
+  position: relative;
+}
+details.chapter summary::-webkit-details-marker{ display:none; }
+details.chapter summary::after{
+  content: '+';
+  position: absolute;
+  right: 0.2rem;
+  top: 1.1rem;
+  font-family: 'IBM Plex Mono', monospace;
+  color: var(--gold-dim);
+  font-size: 1.05rem;
+  transition: color 0.15s ease;
+}
+details.chapter[open] summary::after{ content: '\2212'; color: var(--gold); }
+details.chapter summary:hover .chapter-title,
+details.chapter summary:focus-visible .chapter-title{ color: var(--parchment); }
+details.chapter summary:focus-visible{ outline: 2px solid var(--gold); outline-offset: -2px; }
+
+.chapter-num{
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.78rem;
+  color: var(--gold-dim);
+  min-width: 1.5rem;
+  flex-shrink: 0;
+  padding-top: 0.25rem;
+}
+.chapter-title{
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 600;
+  font-size: 1.4rem;
+  line-height: 1.25;
+  color: var(--parchment-dim);
+  transition: color 0.15s ease;
+}
+details.chapter[open] .chapter-num,
+details.chapter[open] .chapter-title{ color: var(--gold); }
+
+.chapter-body{
+  padding: 0 0.6rem 1.7rem 2.4rem;
+  font-size: 0.96rem;
+  line-height: 1.85;
+  color: var(--parchment);
+}
+.chapter-body p{ margin: 0 0 1.2rem; }
+.chapter-body p:last-child{ margin-bottom: 0; }
+.chapter-body p strong{ color: var(--gold-dim); font-weight: 600; margin-right: 0.15rem; }
+.chapter-body .text-status-pending{ margin: 0; }
+
+/* Reusable style for future in-text links to other pages on the site */
+.term-link{
+  color: var(--parchment);
+  text-decoration: none;
+  border-bottom: 1px dotted var(--gold);
+}
+.term-link:hover,
+.term-link:focus-visible{ color: var(--gold); border-bottom-style: solid; outline: none; }
+
 footer.site-footer{
   text-align:center;
   margin-top: 3.5rem;
