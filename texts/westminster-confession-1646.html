@@ -3,29 +3,125 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The Westminster Confession &middot; Full Text &middot; Particular History</title>
-<link rel="stylesheet" href="../styles.css">
+<title>Westminster Confession of Faith</title>
+<style>
+:root{--bg:#f7f4ee;--card:#fffdf9;--ink:#29261f;--muted:#6f685d;--line:#d9d1c4;--accent:#6d5840;--accent-soft:#eee7dc}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Georgia,"Times New Roman",serif;line-height:1.7}
+header{max-width:980px;margin:0 auto;padding:48px 24px 28px}
+.kicker{font:600 12px/1.3 system-ui,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+h1{font-size:clamp(2rem,5vw,3.4rem);line-height:1.08;margin:.25em 0 .15em}
+.subtitle{color:var(--muted);font-size:1.05rem}
+.controls{display:flex;gap:10px;flex-wrap:wrap;margin-top:24px}
+button,a.button{border:1px solid var(--line);background:var(--card);color:var(--ink);padding:9px 13px;border-radius:8px;font:600 14px system-ui,sans-serif;text-decoration:none;cursor:pointer}
+button:hover,a.button:hover{background:var(--accent-soft)}
+main{max-width:980px;margin:0 auto;padding:0 24px 60px}
+.note{background:var(--accent-soft);border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin:0 0 24px;color:#514a40;font-size:.94rem}
+#status{color:var(--muted);font:14px system-ui,sans-serif;margin:18px 0}
+#confession{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:28px}
+.chapter{border-top:1px solid var(--line);padding:24px 0}
+.chapter:first-child{border-top:0;padding-top:0}
+.chapter h2{font-size:1.45rem;line-height:1.25;margin:0 0 18px}
+.chapter p{margin:0 0 16px}
+.chapter ol,.chapter ul{margin-top:0}
+.source{font:13px/1.5 system-ui,sans-serif;color:var(--muted);margin-top:28px}
+footer{max-width:980px;margin:0 auto;padding:24px;color:var(--muted);font:13px system-ui,sans-serif}
+@media(max-width:650px){header{padding-top:30px}#confession{padding:20px 16px}}
+</style>
 </head>
 <body>
-<div class="wrap">
-  <div class="brand"><a href="../index.html">Particular History</a></div>
-  <nav class="site-nav">
-    <a href="../index.html">Home</a>
-    <a href="../church.html">Church</a>
-    <a href="../revelation.html">Revelation</a>
-    <a href="../compare.html">Compare Creeds</a>
-    <a href="../circles.html">Family Map</a>
-  </nav>
+<header>
+  <div class="kicker">Particular History · Westminster · 1646</div>
+  <h1>Westminster Confession of Faith</h1>
+  <div class="subtitle">The Confession of Faith of the Westminster Assembly of Divines</div>
+  <div class="controls">
+    <button id="expand">Expand All</button>
+    <button id="collapse">Collapse All</button>
+    <a class="button" href="../index.html">Back to Particular History</a>
+  </div>
+</header>
 
-  <header class="page-head">
-    <div class="eyebrow">A.D. 1646 &middot; Full text</div>
-    <h1>The Westminster Confession</h1>
-    <p class="text-status-pending">The full text has not been added yet. Check back soon.</p>
-  </header>
+<main>
+  <div class="note">
+    This page presents the Westminster Confession as the next historical text in the
+    Westminster → Savoy → 1689 sequence. The historical-development and cross-confessional
+    connection layer will be added after the Westminster and Savoy texts are in place.
+  </div>
+  <div id="status">Loading the Westminster text…</div>
+  <section id="confession" aria-live="polite"></section>
+  <div class="source">
+    Text source: the Westminster Confession of Faith, 1646. The page retrieves the public-domain
+    historical text from Wikisource so the text itself can be kept separate from the site's
+    later comparison/annotation layer.
+  </div>
+</main>
+<footer>Particular History</footer>
 
-  <p style="margin-top:2.5rem;"><a href="../topics/westminster-confession-1646.html" style="color:var(--gold);">&larr; Back to Westminster Confession (1646)</a></p>
+<script>
+const API='https://en.wikisource.org/w/api.php?action=parse&page=The_Confession_of_Faith_of_the_Assembly_of_Divines_at_Westminster&prop=text&format=json&origin=*';
 
-  <footer class="site-footer">particular history &middot; primary sources, added over time</footer>
-</div>
+function cleanText(root){
+  root.querySelectorAll('table, .mw-editsection, .reference, sup.reference, .noprint').forEach(e=>e.remove());
+  root.querySelectorAll('h1').forEach(e=>e.remove());
+
+  // Keep the confession's chapter structure but remove Wikisource navigation/front matter.
+  const nodes=[...root.querySelectorAll('h2,h3,p,ol,ul')];
+  const out=document.createElement('div');
+  let chapter=null;
+
+  for(const n of nodes){
+    const txt=n.textContent.trim();
+    if(!txt) continue;
+
+    if(/^CHAPTER\s+[IVXLCDM]+\.?$/i.test(txt)){
+      chapter=document.createElement('article');
+      chapter.className='chapter';
+      const h=document.createElement('h2');
+      h.textContent=txt.replace(/\.$/,'')+'.';
+      chapter.appendChild(h);
+      out.appendChild(chapter);
+      continue;
+    }
+
+    if(!chapter) continue;
+    if(/^Of\s+/i.test(txt) && n.tagName.match(/^H[23]$/)){
+      const h=document.createElement('div');
+      h.style.cssText='font-style:italic;margin:-12px 0 18px;color:#6f685d';
+      h.textContent=txt;
+      chapter.appendChild(h);
+      continue;
+    }
+
+    // Avoid reproducing chapter contents/navigation lists from the source.
+    if((n.tagName==='UL'||n.tagName==='OL') && chapter.children.length<=2) {
+      // Keep numbered paragraph lists only if they are clearly part of the chapter body.
+      if(n.querySelector('li') && /^(I\.|II\.|III\.|IV\.|V\.|VI\.|VII\.|VIII\.|IX\.|X\.)/.test(n.textContent.trim())) continue;
+    }
+    chapter.appendChild(n.cloneNode(true));
+  }
+  return out;
+}
+
+async function load(){
+  try{
+    const r=await fetch(API);
+    if(!r.ok) throw new Error('HTTP '+r.status);
+    const data=await r.json();
+    const wrap=document.createElement('div');
+    wrap.innerHTML=data.parse.text['*'];
+    const content=cleanText(wrap);
+    document.getElementById('confession').replaceChildren(...content.children);
+    document.getElementById('status').textContent='Westminster text loaded.';
+  }catch(e){
+    document.getElementById('status').innerHTML=
+      'The Westminster text could not be loaded automatically. '+
+      '<a href="https://en.wikisource.org/wiki/The_Confession_of_Faith_of_the_Assembly_of_Divines_at_Westminster" target="_blank" rel="noopener">Open the source text directly</a>.';
+  }
+}
+
+document.getElementById('expand').onclick=()=>document.querySelectorAll('.chapter').forEach(x=>x.style.display='block');
+document.getElementById('collapse').onclick=()=>document.querySelectorAll('.chapter').forEach((x,i)=>{if(i>0)x.style.display='none'});
+load();
+</script>
 </body>
 </html>
