@@ -219,7 +219,7 @@ header.page-head p{
   transition: max-height 0.35s ease;
   margin-left: 0.1rem;
 }
-.node.open .panel{ max-height: 700px; }
+.node.open .panel{ max-height: 3000px; } /* fallback only — JS sets the exact height */
 .panel-inner{ padding: 0.4rem 0.9rem 1.6rem 0; }
 
 .field{ margin-bottom: 1.1rem; }
