@@ -4,34 +4,117 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Council of Ephesus (431) - Particular History</title>
-<link rel="stylesheet" href="styles.css">
 <style>
-  .primary-source-container {
-    max-width: 68ch;
-    margin: 3rem auto;
-    padding: 0 1.5rem;
-    line-height: 1.75;
+  /* Baseline site colors embedded to prevent a plain black/white page */
+  :root {
+    --bg-color: #121212;
+    --text-color: #e0e0e0;
+    --parchment-dim: #b5a996;
+    --accent-color: #d4af37;
   }
+  
+  body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+
+  .wrap {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+  }
+
+  .brand a {
+    color: var(--accent-color);
+    text-decoration: none;
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .site-nav {
+    margin: 1.5rem 0 3rem 0;
+    border-bottom: 1px solid #2a2a2a;
+    padding-bottom: 1rem;
+  }
+
+  .site-nav a {
+    color: var(--parchment-dim);
+    text-decoration: none;
+    margin-right: 1.5rem;
+    font-size: 0.95rem;
+  }
+
+  .site-nav a.active {
+    color: var(--text-color);
+    font-weight: bold;
+    border-bottom: 2px solid var(--accent-color);
+    padding-bottom: 0.95rem;
+  }
+
+  .page-head {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .eyebrow {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--accent-color);
+    margin-bottom: 0.5rem;
+  }
+
+  h1 {
+    font-size: 2.5rem;
+    margin: 0 0 0.5rem 0;
+    font-weight: 300;
+  }
+
   .document-title {
     font-style: italic;
     color: var(--parchment-dim);
-    margin-bottom: 2.5rem;
-    font-size: 1.1rem;
-    border-left: 2px solid var(--parchment-dim);
-    padding-left: 1rem;
+    font-size: 1.2rem;
+    margin-top: 0.5rem;
   }
+
+  /* Document Typography */
+  .primary-source-container {
+    max-width: 68ch;
+    margin: 0 auto 4rem auto;
+    line-height: 1.8;
+    font-size: 1.05rem;
+  }
+
   .source-text p {
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.75rem;
     text-align: justify;
   }
+
   .source-text blockquote {
-    margin: 1.5rem 1rem;
-    padding-left: 1rem;
-    border-left: 2px dashed var(--parchment-dim);
+    margin: 2rem 1rem;
+    padding-left: 1.25rem;
+    border-left: 3px solid var(--accent-color);
     color: var(--parchment-dim);
     font-style: italic;
   }
+
+  .site-footer {
+    text-align: center;
+    margin-top: 5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #2a2a2a;
+    color: var(--parchment-dim);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
 </style>
+<link rel="stylesheet" href="styles.css">
 </head>
 <body>
 <div class="wrap">
@@ -47,18 +130,34 @@
   <header class="page-head">
     <div class="eyebrow">Primary Source Documents</div>
     <h1>The Council of Ephesus (431)</h1>
-    <div class="document-title">
-      St. Cyril of Alexandria: The Second Letter to Nestorius
-    </div>
+    <div class="document-title">St. Cyril of Alexandria: The Second Letter to Nestorius</div>
   </header>
 
   <main class="primary-source-container">
     <article class="source-text">
-      <p>Cyril greets Nestorius, addressing criticisms and emphasizing the importance of holding fast to the traditional faith of the holy fathers regarding the Incarnation of the Word. The full unabridged text of St. Cyril's Second Letter to Nestorius as embedded in the file can be found in the referenced public domain source documents.</p>
+      <p>Cyril sends greeting in the Lord to the most religious and pious fellow-minister Nestorius.</p>
+      
+      <p>Certain persons, as I am informed, are gossiping to the detriment of my character in the presence of your Holiness, and this frequently, taking special advantage of the meetings of official assemblies; and thinking perhaps to tickle your ears, they cast forth unadvised expressions, and vent injuries against me who have suffered no wrong, but have been rather rightly convicted. They do this because I have loved the poor and chosen to share their lot. But let them have their way; they will have to give account before the judge of all for their unchecked tongues and unrighteous accusations. I will turn rather to what is more becoming to myself, and remind you as a brother in Christ that you should make your teaching to the people and your exposition of the faith conformable with safety, and remember that he who shall offend one of these little ones that believe in Christ shall suffer an intolerable penalty.</p>
+      
+      <p>If the number of the injured be great, how much greater diligence do we need to remove the offense and to expound the wholesome word of faith to those who seek the truth? This we shall perform most rightly if, when we meet with the writings of the holy fathers, we are careful to hold them in high esteem, and proving ourselves, whether we are in the faith according to what is written, conform our own minds to their orthodox and irreproachable definitions.</p>
+      
+      <p>The holy and great synod of Nicaea said that the only-begotten Son, born of God the Father by nature, very God of very God, Light of Light, by whom the Father made all things, came down, was incarnate, was made man, suffered, rose again on the third day, and ascended into heaven. These words and definitions we ought to follow, considering what is meant by the Word of God being incarnate and made man. For we do not say that the nature of the Word was changed and became flesh, nor that it was transformed into a whole man, of soul and body; but rather we say that the Word, having united to himself according to the hypostasis (substance) the flesh animated by a rational soul, inexplicably and incomprehensibly became man, and was called the Son of Man, not by mere will or good pleasure, nor by the assumption of a person only.</p>
+      
+      <p>We declare that while the natures which were brought together into a true unity were different, yet there is one Christ and one Son from both; not that the difference of the natures was destroyed by the union, but rather that divinity and humanity, by their ineffable and unspeakable concurrence into unity, have given us one Lord and Christ and Son. Thus, although he existed and was begotten of the Father before the worlds, he is also said to have been begotten according to the flesh from a woman; not as though his divine nature took its beginning in the holy Virgin, nor had any necessary need of a second birth for its own sake after that from the Father (for it is absurd and foolish to say that he who existed before all worlds and is co-eternal with the Father needed a second beginning to exist).</p>
+      
+      <p>But since for us and for our salvation, having united humanity to himself hypostatically, he came forth from a woman, for this reason he is said to have been born according to the flesh. For it was not an ordinary man who was first born of the holy Virgin, upon whom the Word afterwards descended, but the Word, having been united from the very womb, is said to have undergone a birth according to the flesh, as making his own the birth of his own flesh.</p>
+      
+      <p>Thus we say that he suffered and rose again; not that the Word of God suffered in his own nature, or was scourged, or pierced, or received any other wounds (for the divine nature is impassible, because it is incorporeal). But since it was his own body that suffered these things, he himself is said to have suffered them for us; for the impassible one was in the suffering body. In the same manner we understand his death. The Word of God is by nature immortal, incorruptible, life, and life-giving; but since his own body by the grace of God tasted death for every man, as Paul says, the Word himself is said to have suffered death for us. Not that he experienced death as regards his own nature (to say or think that would be madness), but because, as I have said, his flesh tasted death.</p>
+      
+      <p>So also when his flesh was raised, the resurrection is spoken of as his resurrection; not that he fell into corruption—God forbid—but because his body was raised again. Thus we confess one Christ and Lord; not worshipping a man along with the Word, lest a semblance of division should be introduced by the phrase "along with," but worshipping one and the same Lord, because his body is not alien to the Word, with which body he sits with the Father himself. Nor do we say that the Son from the Father sits with a man, as though there were two, but that he is one with his own flesh. If, however, we reject this hypostatic union as impossible or unsuited, we fall into the error of making two sons. For we must then contrast the man, honored uniquely with the title of Son, with the Word of God, possessing the name and reality of Sonship by nature.</p>
+      
+      <p>We must not, therefore, divide the one Lord Jesus Christ into two sons. It will in no way assist the right expression of the faith to do so, even if an association of persons be alleged. For Scripture does not say that the Word united the person of a man to himself, but that he became flesh. Now that expression, "the Word became flesh," can mean nothing else than that he partook of flesh and blood even as we do, and made our body his own, and came forth a man from a woman, not casting aside his existence as God, or his generation from God the Father, but remaining what he was, even in the assumption of flesh.</p>
+      
+      <p>This is the doctrine which the correct faith everywhere maintains. This is what we shall find the holy fathers believed. Therefore they did not hesitate to call the holy Virgin <em>Theotokos</em> (God-bearer); not as though the nature of the Word or his divinity took its beginning from the holy Virgin, but because that holy body, animated by a rational soul, was born of her, to which body the Word was hypostatically united, and so he is said to have been born according to the flesh.</p>
+      
+      <p>I write these things to you out of love in Christ, and exhort you as a brother to think and teach these things, keeping the peace of the churches and preserving unbroken the bond of harmony and love among the priests of God.</p>
     </article>
   </main>
 
   <footer class="site-footer">particular history &middot; a work in progress</footer>
 </div>
-</body>
-</html>
