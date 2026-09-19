@@ -7,31 +7,35 @@
 <link rel="stylesheet" href="../styles.css">
 
 <style>
-/* Unified Historical Connection Layer Styles */
+/* Historical connections layer */
 .connection-controls {
   display: flex;
   gap: .65rem;
   flex-wrap: wrap;
-  margin: 0 0 1.5rem;
+  margin: 0 0 1.25rem;
+  padding: 0;
 }
 
-/* Force both main controls to look completely identical */
-.expand-all-btn, .connection-btn, .chapter-connection-btn {
+/* Force the connections button to match the theme's default button (like Expand All) */
+.connection-btn {
   appearance: none;
-  background: transparent;
+  background-color: var(--gold, #b58b3a);
+  color: #121212 !important;
   border: 1px solid var(--gold, #b58b3a);
-  color: var(--gold, #b58b3a);
-  border-radius: 6px;
-  padding: .55rem .8rem;
+  border-radius: 4px;
+  padding: .55rem 1rem;
   cursor: pointer;
   font: inherit;
-  font-weight: 500;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  font-size: 0.95rem;
   display: inline-block;
-  transition: background 0.2s ease;
+  line-height: normal;
 }
 
-.expand-all-btn:hover, .connection-btn:hover, .chapter-connection-btn:hover {
-  background: rgba(181, 139, 58, 0.12);
+.connection-btn:hover {
+  opacity: 0.9;
 }
 
 .connection-panel {
@@ -68,6 +72,21 @@
   display: flex;
   justify-content: flex-end;
   margin: .5rem 0 .75rem;
+}
+
+.chapter-connection-btn {
+  appearance: none;
+  border: 1px solid var(--gold, #b58b3a);
+  background: transparent;
+  color: inherit;
+  border-radius: 6px;
+  padding: .55rem .8rem;
+  cursor: pointer;
+  font: inherit;
+}
+
+.chapter-connection-btn:hover {
+  background: rgba(181, 139, 58, 0.12);
 }
 
 .chapter-connections {
@@ -146,10 +165,10 @@ body.connections-on .chapter-connections {
 </div>
 <div class="wrap">
 
-<div class="connection-controls" style="display: flex !important; gap: 0.65rem; margin: 2rem 0; visibility: visible !important; opacity: 1 !important;">
-  <button class="expand-all-btn" id="expandAllBtn" onclick="toggleAll()" style="display: inline-block !important; background: #b58b3a; color: #121212; border: none; border-radius: 6px; padding: 0.55rem 1rem; cursor: pointer; font-size: 0.95rem; font-weight: bold; font-family: inherit;">Expand All</button>
-  <button class="connection-btn" id="connectionsBtn" onclick="toggleConnections()" style="display: inline-block !important; background: transparent; color: #b58b3a; border: 1px solid #b58b3a; border-radius: 6px; padding: 0.55rem 1rem; cursor: pointer; font-size: 0.95rem; font-weight: bold; font-family: inherit;">Show Historical Connections</button>
-</div>
+  <div class="connection-controls">
+    <button class="expand-all-btn" id="expandAllBtn" onclick="toggleAll()">Expand All</button>
+    <button class="connection-btn" id="connectionsBtn" onclick="toggleConnections()">Show Historical Connections</button>
+  </div>
 
 <div class="connection-panel" id="connectionPanel" aria-live="polite">
   <h2>Historical Connections</h2>
