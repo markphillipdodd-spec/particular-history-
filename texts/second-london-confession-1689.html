@@ -693,10 +693,12 @@ function renderConnections(chapterId, container) {
     let descriptionText = item[2];
     
     // Prefix the target path with your accurate directory subfolder context
-    let docPath = sourceName.toLowerCase().includes('westminster') ? 'westminster.html' : 'savoy.html';
-    if (sourceName.toLowerCase().includes('nicaea') || sourceName.toLowerCase().includes('chalcedon') || sourceName.toLowerCase().includes('1689')) {
-      docPath = '#'; 
-    }
+   //  NEW UPDATED CODE (Pointing to your exact filenames)
+let docPath = sourceName.toLowerCase().includes('westminster') ? 'westminster-confession-1646.html' : 'savoy-declaration-1648.html';
+if (sourceName.toLowerCase().includes('nicaea') || sourceName.toLowerCase().includes('chalcedon') || sourceName.toLowerCase().includes('1689')) {
+  docPath = '#'; 
+}
+
     
     htmlContent += `
       <div class="connection-item" style="margin-bottom: 1.25rem; border-bottom: 1px dashed rgba(181,139,58,0.2); padding-bottom: 0.75rem;">
