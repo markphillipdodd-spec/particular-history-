@@ -7,25 +7,124 @@
 <link rel="stylesheet" href="../styles.css">
 
 <style>
-/* Historical connections layer */
-.connection-controls{display:flex;gap:.65rem;flex-wrap:wrap;margin:0 0 1.25rem}
-.connection-btn,.chapter-connection-btn{appearance:none;border:1px solid var(--gold,#b58b3a);background:transparent;color:inherit;border-radius:6px;padding:.55rem .8rem;cursor:pointer;font:inherit}
-.connection-btn:hover,.chapter-connection-btn:hover{background:rgba(181,139,58,.12)}
-.connection-panel{display:none;margin:0 0 1.5rem;padding:1rem 1.1rem;border:1px solid rgba(181,139,58,.45);border-radius:8px;background:rgba(181,139,58,.055)}
-.connection-panel.active{display:block}
-.connection-panel h2{margin:.1rem 0 .45rem;font-size:1.15rem}
-.connection-panel p{margin:.35rem 0}
-.connection-note{margin:.85rem 0 0;padding-top:.75rem;border-top:1px solid rgba(128,128,128,.25);font-size:.92rem;opacity:.9}
-.chapter-tools{display:flex;justify-content:flex-end;margin:.5rem 0 .75rem}
-.chapter-connections{display:none;margin:0 0 1rem;padding:.8rem 1rem;border-left:3px solid var(--gold,#b58b3a);background:rgba(181,139,58,.045)}
-.chapter-connections.active{display:block}
-.chapter-connections h3{margin:.05rem 0 .45rem;font-size:1rem}
-.connection-item{margin:.55rem 0}
-.connection-label{display:inline-block;font-size:.75rem;text-transform:uppercase;letter-spacing:.05em;font-weight:700;margin-right:.35rem;opacity:.78}
-.connection-status{display:inline-block;font-size:.75rem;padding:.12rem .38rem;border:1px solid rgba(128,128,128,.35);border-radius:999px;margin-left:.35rem}
-.connection-legend{display:grid;gap:.45rem;margin-top:.7rem;font-size:.9rem}
-.connection-legend strong{font-weight:700}
-body.connections-on .chapter-connections{display:block}
+/* Unified Historical Connection Layer Styles */
+.connection-controls {
+  display: flex;
+  gap: .65rem;
+  flex-wrap: wrap;
+  margin: 0 0 1.5rem;
+}
+
+/* Force both main controls to look completely identical */
+.expand-all-btn, .connection-btn, .chapter-connection-btn {
+  appearance: none;
+  background: transparent;
+  border: 1px solid var(--gold, #b58b3a);
+  color: var(--gold, #b58b3a);
+  border-radius: 6px;
+  padding: .55rem .8rem;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 500;
+  display: inline-block;
+  transition: background 0.2s ease;
+}
+
+.expand-all-btn:hover, .connection-btn:hover, .chapter-connection-btn:hover {
+  background: rgba(181, 139, 58, 0.12);
+}
+
+.connection-panel {
+  display: none;
+  margin: 0 0 1.5rem;
+  padding: 1rem 1.1rem;
+  border: 1px solid rgba(181, 139, 58, 0.45);
+  border-radius: 8px;
+  background: rgba(181, 139, 58, 0.055);
+}
+
+.connection-panel.active {
+  display: block;
+}
+
+.connection-panel h2 {
+  margin: .1rem 0 .45rem;
+  font-size: 1.15rem;
+}
+
+.connection-panel p {
+  margin: .35rem 0;
+}
+
+.connection-note {
+  margin: .85rem 0 0;
+  padding-top: .75rem;
+  border-top: 1px solid rgba(128, 128, 128, .25);
+  font-size: .92rem;
+  opacity: .9;
+}
+
+.chapter-tools {
+  display: flex;
+  justify-content: flex-end;
+  margin: .5rem 0 .75rem;
+}
+
+.chapter-connections {
+  display: none;
+  margin: 0 0 1rem;
+  padding: .8rem 1rem;
+  border-left: 3px solid var(--gold, #b58b3a);
+  background: rgba(181, 139, 58, 0.045);
+}
+
+.chapter-connections.active {
+  display: block;
+}
+
+.chapter-connections h3 {
+  margin: .05rem 0 .45rem;
+  font-size: 1rem;
+}
+
+.connection-item {
+  margin: .55rem 0;
+}
+
+.connection-label {
+  display: inline-block;
+  font-size: .75rem;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  font-weight: 700;
+  margin-right: .35rem;
+  opacity: .78;
+}
+
+.connection-status {
+  display: inline-block;
+  font-size: .75rem;
+  padding: .12rem .38rem;
+  border: 1px solid rgba(128, 128, 128, .35);
+  border-radius: 999px;
+  margin-left: .35rem;
+}
+
+.connection-legend {
+  display: grid;
+  gap: .45rem;
+  margin-top: .7rem;
+  font-size: .9rem;
+}
+
+.connection-legend strong {
+  font-weight: 700;
+}
+
+body.connections-on .chapter-connections {
+  display: block;
+}
+
 </style>
 </head>
 <body>
