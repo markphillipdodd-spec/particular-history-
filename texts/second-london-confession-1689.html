@@ -7,146 +7,24 @@
 <link rel="stylesheet" href="../styles.css">
 
 <style>
-/* Historical connections layer structure */
-.connection-controls {
-  display: flex;
-  gap: .65rem;
-  flex-wrap: wrap;
-  margin: 0 0 1.25rem;
-  padding: 0;
-}
-
-/* 1. Force the top "Show Historical Connections" button to exactly match your filled "Expand All" button */
-.connection-btn {
-  appearance: none;
-  background: var(--gold, #b58b3a);
-  color: #121212 !important;
-  border: 1px solid var(--gold, #b58b3a);
-  border-radius: 6px;
-  padding: .55rem .8rem;
-  cursor: pointer;
-  font: inherit;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: .05em;
-  font-size: 0.95rem;
-  display: inline-block;
-  line-height: normal;
-}
-
-.connection-btn:hover {
-  background: rgba(181, 139, 58, 0.85);
-}
-
-/* 2. Keep the transparent, outline style ONLY for the sub-buttons inside the dropdown chapters */
-.chapter-tools {
-  display: flex;
-  justify-content: flex-end;
-  margin: .5rem 0 .75rem;
-}
-
-.chapter-connection-btn {
-  appearance: none;
-  border: 1px solid var(--gold, #b58b3a);
-  background: transparent;
-  color: inherit;
-  border-radius: 6px;
-  padding: .55rem .8rem;
-  cursor: pointer;
-  font: inherit;
-}
-
-.chapter-connection-btn:hover {
-  background: rgba(181, 139, 58, 0.12);
-}
-
-/* Functional slide-open behavior for the panels */
-.connection-panel {
-  display: none;
-  margin: 0 0 1.5rem;
-  padding: 1rem 1.1rem;
-  border: 1px solid rgba(181, 139, 58, 0.45);
-  border-radius: 8px;
-  background: rgba(181, 139, 58, 0.055);
-}
-
-.connection-panel.active {
-  display: block;
-}
-
-.connection-panel h2 {
-  margin: .1rem 0 .45rem;
-  font-size: 1.15rem;
-}
-
-.connection-panel p {
-  margin: .35rem 0;
-}
-
-.connection-note {
-  margin: .85rem 0 0;
-  padding-top: .75rem;
-  border-top: 1px solid rgba(128, 128, 128, .25);
-  font-size: .92rem;
-  opacity: .9;
-}
-
-.chapter-connections {
-  display: none;
-  margin: 0 0 1rem;
-  padding: .8rem 1rem;
-  border-left: 3px solid var(--gold, #b58b3a);
-  background: rgba(181, 139, 58, 0.045);
-}
-
-.chapter-connections.active {
-  display: block;
-}
-
-.chapter-connections h3 {
-  margin: .05rem 0 .45rem;
-  font-size: 1rem;
-}
-
-.connection-item {
-  margin: .55rem 0;
-}
-
-.connection-label {
-  display: inline-block;
-  font-size: .75rem;
-  text-transform: uppercase;
-  letter-spacing: .05em;
-  font-weight: 700;
-  margin-right: .35rem;
-  opacity: .78;
-}
-
-.connection-status {
-  display: inline-block;
-  font-size: .75rem;
-  padding: .12rem .38rem;
-  border: 1px solid rgba(128, 128, 128, .35);
-  border-radius: 999px;
-  margin-left: .35rem;
-}
-
-.connection-legend {
-  display: grid;
-  gap: .45rem;
-  margin-top: .7rem;
-  font-size: .9rem;
-}
-
-.connection-legend strong {
-  font-weight: 700;
-}
-
-body.connections-on .chapter-connections {
-  display: block;
-}
-
-
+/* Historical connections layer */
+.connection-controls{display:flex;gap:.65rem;flex-wrap:wrap;margin:0 0 1.25rem}
+.connection-panel{display:none;margin:0 0 1.5rem;padding:1rem 1.1rem;border:1px solid rgba(181,139,58,.45);border-radius:8px;background:rgba(181,139,58,.055)}
+.connection-panel.active{display:block}
+.connection-panel h2{margin:.1rem 0 .45rem;font-size:1.15rem}
+.connection-panel p{margin:.35rem 0}
+.connection-note{margin:.85rem 0 0;padding-top:.75rem;border-top:1px solid rgba(128,128,128,.25);font-size:.92rem;opacity:.9}
+.chapter-tools{display:flex;justify-content:flex-end;margin:.5rem 0 .75rem}
+.chapter-connection-btn{appearance:none;border:1px solid var(--gold,#b58b3a);background:transparent;color:inherit;border-radius:6px;padding:.55rem .8rem;cursor:pointer;font:inherit}
+.chapter-connection-btn:hover{background:rgba(181,139,58,.12)}
+.chapter-connections{display:none;margin:0 0 1rem;padding:.8rem 1rem;border-left:3px solid var(--gold,#b58b3a);background:rgba(181,139,58,.045)}
+.chapter-connections.active{display:block}
+.connection-item{margin:.55rem 0}
+.connection-label{display:inline-block;font-size:.75rem;text-transform:uppercase;letter-spacing:.05em;font-weight:700;margin-right:.35rem;opacity:.78}
+.connection-status{display:inline-block;font-size:.75rem;padding:.12rem .38rem;border:1px solid rgba(128,128,128,.35);border-radius:999px;margin-left:.35rem}
+.connection-legend{display:grid;gap:.45rem;margin-top:.7rem;font-size:.9rem}
+.connection-legend strong{font-weight:700}
+body.connections-on .chapter-connections {display:block;}
 </style>
 </head>
 <body>
@@ -163,26 +41,30 @@ body.connections-on .chapter-connections {
   <header class="page-head">
     <div class="eyebrow">A.D. 1689 &middot; Full text</div>
     <h1>The Second London Confession</h1>
-        <p>The confession of faith of upwards of one hundred Particular Baptist congregations, agreed in London, 1689. Original wording preserved throughout.</p>
+    <p>The confession of faith of upwards of one hundred Particular Baptist congregations, agreed in London, 1689. Original wording preserved throughout.</p>
   </header>
-</div>
 
-<div class="connection-controls">
-  <button class="expand-all-btn" id="expandAllBtn" onclick="toggleAll()">Expand All</button>
-  <button class="expand-all-btn" id="connectionsBtn" onclick="toggleConnections()">Show Historical Connections</button>
-</div>
+  <div class="connection-controls" style="margin-top: 1.5rem !important; margin-bottom: 1.5rem !important; padding: 0 !important;">
+    <button class="expand-all-btn" id="expandAllBtn" onclick="toggleAll()">Expand All</button>
+    <button class="expand-all-btn" id="connectionsBtn" onclick="toggleConnections()">Show Historical Connections</button>
+  </div>
 
+  <div class="connection-panel" id="connectionPanel" aria-live="polite">
+    <h2>Historical Connections</h2>
+    <p>This layer places the 1689 Confession within the confessional development represented by Scripture, the early ecumenical creeds, the Reformation confessions, Westminster, Savoy, and the Second London Confession.</p>
+    <p>For now, the chapter-level connections below identify the historical/doctrinal relationships that are useful for orientation. The detailed <strong>Westminster &rarr; Savoy &rarr; 1689</strong> comparison layer will be activated as those full-text pages are added.</p>
+    <div class="connection-legend">
+      <div><strong>Inherited</strong> &mdash; substantially follows an earlier confessional formulation.</div>
+      <div><strong>Modified</strong> &mdash; retains an earlier formulation while changing wording or scope.</div>
+      <div><strong>Developed</strong> &mdash; takes an inherited theme and gives it a more particular or systematic formulation.</div>
+      <div><strong>Added</strong> &mdash; material distinctive to the 1689 text or its Baptist setting.</div>
+      <div><strong>Reorganized</strong> &mdash; material is substantially retained but arranged differently.</div>
+    </div>
+    <p class="connection-note">The labels are descriptive, not evaluative. They are intended to show continuity and development without implying that every difference is an improvement or a defect.</p>
+  </div>
 
-<div class="connection-panel" id="connectionPanel" aria-live="polite">
-  <h2>Historical Connections</h2>
-  <p>This layer places the 1689 Confession within the confessional development represented by Scripture, the early ecumenical creeds, the Reformation confessions, Westminster, Savoy, and the Second London Confession.</p>
-  <p>For now, the chapter-level connections below identify the historical/doctrinal relationships that are useful for orientation. The detailed <strong>Westminster → Savoy → 1689</strong> comparison layer will be activated as those full-text pages are added.</p>
-  <div class="connection-legend">
-    <div><strong>Inherited</strong> — substantially follows an earlier confessional formulation.</div>
-    <div><strong>Modified</strong> — retains an earlier formulation while changing wording or scope.</div>
-    <div><strong>Developed</strong> — takes an inherited theme and gives it a more particular or systematic formulation.</div>
-    <div><strong>Added</strong> — material distinctive to the 1689 text or its Baptist setting.</div>
-    <div><strong>Reorganized</strong> — material is substantially retained but arranged differently.</div>
+  <div id="chapters">
+
   </div>
   <p class="connection-note">The labels are descriptive, not evaluative. They are intended to show continuity and development without implying that every difference is an improvement or a defect.</p>
 </div>
