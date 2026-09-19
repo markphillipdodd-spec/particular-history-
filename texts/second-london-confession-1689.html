@@ -694,24 +694,24 @@ function renderConnections(chapterId, container) {
     
     // Prefix the target path with your accurate directory subfolder context
    //  NEW UPDATED CODE (Pointing to your exact filenames)
-let docPath = sourceName.toLowerCase().includes('westminster') ? 'westminster-confession-1646.html' : 'savoy-declaration-1648.html';
+//  PASTE THIS NEW REPLACEMENT BLOCK:
+let sourceKey = sourceName.toLowerCase().includes('westminster') ? 'westminster' : 'savoy';
 if (sourceName.toLowerCase().includes('nicaea') || sourceName.toLowerCase().includes('chalcedon') || sourceName.toLowerCase().includes('1689')) {
-  docPath = '#'; 
+  sourceKey = '#'; 
 }
 
-    
-    htmlContent += `
-      <div class="connection-item" style="margin-bottom: 1.25rem; border-bottom: 1px dashed rgba(181,139,58,0.2); padding-bottom: 0.75rem;">
-        <div style="margin-bottom: 0.35rem;">
-          <span class="connection-label" style="font-weight: bold; color: var(--gold, #b58b3a); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em;">${sourceName}</span>
-          <span class="connection-status" style="font-size: 0.75rem; background: rgba(181,139,58,0.1); border: 1px solid rgba(181,139,58,0.4); border-radius: 4px; padding: 2px 6px; margin-left: 0.5rem; text-transform: uppercase; color: var(--gold, #b58b3a);">${statusLabel}</span>
-        </div>
-        <div style="font-size: 0.95rem; line-height: 1.6; margin-bottom: 0.5rem; color: #e0e0e0;">${descriptionText}</div>
-        ${docPath !== '#' ? `
-        <div style="font-size: 0.85rem; margin-top: 0.5rem;">
-         <a href="${docPath}#${chapterId}" style="color: var(--gold, #b58b3a); text-decoration: underline; font-weight: 500;">Compare full text side-by-side &rarr;</a>
-        </div>` : ''}
-      </div>`;
+htmlContent += `
+  <div class="connection-item" style="margin-bottom: 1.25rem; border-bottom: 1px dashed rgba(181,139,58,0.2); padding-bottom: 0.75rem;">
+    <div style="margin-bottom: 0.35rem;">
+      <span class="connection-label" style="font-weight: bold; color: var(--gold, #b58b3a); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em;">${sourceName}</span>
+      <span class="connection-status" style="font-size: 0.75rem; background: rgba(181,139,58,0.1); border: 1px solid rgba(181,139,58,0.4); border-radius: 4px; padding: 2px 6px; margin-left: 0.5rem; text-transform: uppercase; color: var(--gold, #b58b3a);">${statusLabel}</span>
+    </div>
+    <div style="font-size: 0.95rem; line-height: 1.6; margin-bottom: 0.5rem; color: #e0e0e0;">${descriptionText}</div>
+    ${sourceKey !== '#' ? `
+    <div style="font-size: 0.85rem; margin-top: 0.5rem;">
+      <a href="compare.html?target=\({sourceKey}&chapter=\){chapterId}" style="color: var(--gold, #b58b3a); text-decoration: underline; font-weight: 500;">Compare full text side-by-side &rarr;</a>
+    </div>` : ''}
+  </div>`;
   });
   container.innerHTML = htmlContent;
 }
