@@ -7,7 +7,7 @@
 <link rel="stylesheet" href="../styles.css">
 
 <style>
-/* Historical connections layer */
+/* Historical connections layer structure */
 .connection-controls {
   display: flex;
   gap: .65rem;
@@ -16,14 +16,14 @@
   padding: 0;
 }
 
-/* Force the connections button to match the theme's default button (like Expand All) */
+/* 1. Force the top "Show Historical Connections" button to exactly match your filled "Expand All" button */
 .connection-btn {
   appearance: none;
-  background-color: var(--gold, #b58b3a);
+  background: var(--gold, #b58b3a);
   color: #121212 !important;
   border: 1px solid var(--gold, #b58b3a);
-  border-radius: 4px;
-  padding: .55rem 1rem;
+  border-radius: 6px;
+  padding: .55rem .8rem;
   cursor: pointer;
   font: inherit;
   font-weight: 700;
@@ -35,9 +35,32 @@
 }
 
 .connection-btn:hover {
-  opacity: 0.9;
+  background: rgba(181, 139, 58, 0.85);
 }
 
+/* 2. Keep the transparent, outline style ONLY for the sub-buttons inside the dropdown chapters */
+.chapter-tools {
+  display: flex;
+  justify-content: flex-end;
+  margin: .5rem 0 .75rem;
+}
+
+.chapter-connection-btn {
+  appearance: none;
+  border: 1px solid var(--gold, #b58b3a);
+  background: transparent;
+  color: inherit;
+  border-radius: 6px;
+  padding: .55rem .8rem;
+  cursor: pointer;
+  font: inherit;
+}
+
+.chapter-connection-btn:hover {
+  background: rgba(181, 139, 58, 0.12);
+}
+
+/* Functional slide-open behavior for the panels */
 .connection-panel {
   display: none;
   margin: 0 0 1.5rem;
@@ -66,27 +89,6 @@
   border-top: 1px solid rgba(128, 128, 128, .25);
   font-size: .92rem;
   opacity: .9;
-}
-
-.chapter-tools {
-  display: flex;
-  justify-content: flex-end;
-  margin: .5rem 0 .75rem;
-}
-
-.chapter-connection-btn {
-  appearance: none;
-  border: 1px solid var(--gold, #b58b3a);
-  background: transparent;
-  color: inherit;
-  border-radius: 6px;
-  padding: .55rem .8rem;
-  cursor: pointer;
-  font: inherit;
-}
-
-.chapter-connection-btn:hover {
-  background: rgba(181, 139, 58, 0.12);
 }
 
 .chapter-connections {
@@ -143,6 +145,7 @@
 body.connections-on .chapter-connections {
   display: block;
 }
+
 
 </style>
 </head>
