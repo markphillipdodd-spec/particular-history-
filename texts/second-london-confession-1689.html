@@ -38,13 +38,13 @@ body.connections-on .chapter-connections {display:block;}
     <a href="../circles.html">Family Map</a>
   </nav>
 
-  <header class="page-head">
+    <header class="page-head">
     <div class="eyebrow">A.D. 1689 &middot; Full text</div>
     <h1>The Second London Confession</h1>
     <p>The confession of faith of upwards of one hundred Particular Baptist congregations, agreed in London, 1689. Original wording preserved throughout.</p>
   </header>
 
-  <div class="connection-controls" style="margin-top: 1.5rem !important; margin-bottom: 1.5rem !important; padding: 0 !important;">
+  <div class="connection-controls">
     <button class="expand-all-btn" id="expandAllBtn" onclick="toggleAll()">Expand All</button>
     <button class="expand-all-btn" id="connectionsBtn" onclick="toggleConnections()">Show Historical Connections</button>
   </div>
@@ -64,6 +64,7 @@ body.connections-on .chapter-connections {display:block;}
   </div>
 
   <div id="chapters">
+
 
   </div>
 
@@ -692,6 +693,7 @@ function renderConnections(chapterId, container) {
     let statusLabel = item[1];
     let descriptionText = item[2];
     
+    // Prefix the target path with your accurate directory subfolder context
     let docPath = sourceName.toLowerCase().includes('westminster') ? 'westminster.html' : 'savoy.html';
     if (sourceName.toLowerCase().includes('nicaea') || sourceName.toLowerCase().includes('chalcedon') || sourceName.toLowerCase().includes('1689')) {
       docPath = '#'; 
