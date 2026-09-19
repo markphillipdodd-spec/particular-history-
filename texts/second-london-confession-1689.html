@@ -709,7 +709,7 @@ htmlContent += `
     <div style="font-size: 0.95rem; line-height: 1.6; margin-bottom: 0.5rem; color: #e0e0e0;">${descriptionText}</div>
     ${sourceKey !== '#' ? `
     <div style="font-size: 0.85rem; margin-top: 0.5rem;">
-      <a href="compare.html?target=\({sourceKey}&chapter=\){chapterId}" style="color: var(--gold, #b58b3a); text-decoration: underline; font-weight: 500;">Compare full text side-by-side &rarr;</a>
+     <a href="compare.html?target=${sourceKey}&chapter=${chapterId}" style="color: var(--gold, #b58b3a); text-decoration: underline; font-weight: 500;">Compare full text side-by-side &rarr;</a>
     </div>` : ''}
   </div>`;
   });
