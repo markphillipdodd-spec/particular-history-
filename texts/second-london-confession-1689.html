@@ -5,6 +5,28 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>The Second London Confession (1689) &middot; Full Text &middot; Particular History</title>
 <link rel="stylesheet" href="../styles.css">
+
+<style>
+/* Historical connections layer */
+.connection-controls{display:flex;gap:.65rem;flex-wrap:wrap;margin:0 0 1.25rem}
+.connection-btn,.chapter-connection-btn{appearance:none;border:1px solid var(--gold,#b58b3a);background:transparent;color:inherit;border-radius:6px;padding:.55rem .8rem;cursor:pointer;font:inherit}
+.connection-btn:hover,.chapter-connection-btn:hover{background:rgba(181,139,58,.12)}
+.connection-panel{display:none;margin:0 0 1.5rem;padding:1rem 1.1rem;border:1px solid rgba(181,139,58,.45);border-radius:8px;background:rgba(181,139,58,.055)}
+.connection-panel.active{display:block}
+.connection-panel h2{margin:.1rem 0 .45rem;font-size:1.15rem}
+.connection-panel p{margin:.35rem 0}
+.connection-note{margin:.85rem 0 0;padding-top:.75rem;border-top:1px solid rgba(128,128,128,.25);font-size:.92rem;opacity:.9}
+.chapter-tools{display:flex;justify-content:flex-end;margin:.5rem 0 .75rem}
+.chapter-connections{display:none;margin:0 0 1rem;padding:.8rem 1rem;border-left:3px solid var(--gold,#b58b3a);background:rgba(181,139,58,.045)}
+.chapter-connections.active{display:block}
+.chapter-connections h3{margin:.05rem 0 .45rem;font-size:1rem}
+.connection-item{margin:.55rem 0}
+.connection-label{display:inline-block;font-size:.75rem;text-transform:uppercase;letter-spacing:.05em;font-weight:700;margin-right:.35rem;opacity:.78}
+.connection-status{display:inline-block;font-size:.75rem;padding:.12rem .38rem;border:1px solid rgba(128,128,128,.35);border-radius:999px;margin-left:.35rem}
+.connection-legend{display:grid;gap:.45rem;margin-top:.7rem;font-size:.9rem}
+.connection-legend strong{font-weight:700}
+body.connections-on .chapter-connections{display:block}
+</style>
 </head>
 <body>
 <div class="wrap">
@@ -22,12 +44,33 @@
     <h1>The Second London Confession</h1>
     <p>The confession of faith of upwards of one hundred Particular Baptist congregations, agreed in London, 1689. Original wording preserved throughout.</p>
   </header>
+</div>
+<div class="wrap">
 
-  <button class="expand-all-btn" id="expandAllBtn" onclick="toggleAll()">Expand All</button>
+<div class="connection-controls" style="display: flex !important; gap: 0.65rem; margin: 2rem 0; visibility: visible !important; opacity: 1 !important;">
+  <button class="expand-all-btn" id="expandAllBtn" onclick="toggleAll()" style="display: inline-block !important; background: #b58b3a; color: #121212; border: none; border-radius: 6px; padding: 0.55rem 1rem; cursor: pointer; font-size: 0.95rem; font-weight: bold; font-family: inherit;">Expand All</button>
+  <button class="connection-btn" id="connectionsBtn" onclick="toggleConnections()" style="display: inline-block !important; background: transparent; color: #b58b3a; border: 1px solid #b58b3a; border-radius: 6px; padding: 0.55rem 1rem; cursor: pointer; font-size: 0.95rem; font-weight: bold; font-family: inherit;">Show Historical Connections</button>
+</div>
+
+<div class="connection-panel" id="connectionPanel" aria-live="polite">
+  <h2>Historical Connections</h2>
+  <p>This layer places the 1689 Confession within the confessional development represented by Scripture, the early ecumenical creeds, the Reformation confessions, Westminster, Savoy, and the Second London Confession.</p>
+  <p>For now, the chapter-level connections below identify the historical/doctrinal relationships that are useful for orientation. The detailed <strong>Westminster → Savoy → 1689</strong> comparison layer will be activated as those full-text pages are added.</p>
+  <div class="connection-legend">
+    <div><strong>Inherited</strong> — substantially follows an earlier confessional formulation.</div>
+    <div><strong>Modified</strong> — retains an earlier formulation while changing wording or scope.</div>
+    <div><strong>Developed</strong> — takes an inherited theme and gives it a more particular or systematic formulation.</div>
+    <div><strong>Added</strong> — material distinctive to the 1689 text or its Baptist setting.</div>
+    <div><strong>Reorganized</strong> — material is substantially retained but arranged differently.</div>
+  </div>
+  <p class="connection-note">The labels are descriptive, not evaluative. They are intended to show continuity and development without implying that every difference is an improvement or a defect.</p>
+</div>
 
   <div id="chapters">
 <details class="chapter" id="preface">
 <summary><span class="chapter-num">&mdash;</span><span class="chapter-title">Preface</span></summary>
+<div class="chapter-tools"><button class="chapter-connection-btn" type="button" onclick="toggleChapterConnections(this)">Show Connections</button></div>
+<div class="chapter-connections" data-chapter-connections></div>
 <div class="chapter-body">
 <p id="preface-1">We, the ministers and messengers of, and concerned for, upwards of one hundred baptized congregations in England and Wales (denying Arminianism), being met together in London, from the third of the seventh month to the eleventh of the same, 1689, to consider of some things that might be for the glory of God and the good of these congregations, have thought meet (for the satisfaction of all other Christians that differ from us in the point of baptism) to recommend to their perusal this Confession of Our Faith, which Confession we own as containing the doctrine of our faith and practice; and do desire that the members of our churches respectively do furnish themselves therewith.</p>
 <p><strong>To The Judicious and Impartial Reader</strong></p>
@@ -40,6 +83,8 @@
 
 <details class="chapter" id="chapter-1">
 <summary><span class="chapter-num">1</span><span class="chapter-title">Of the Holy Scriptures</span></summary>
+<div class="chapter-tools"><button class="chapter-connection-btn" type="button" onclick="toggleChapterConnections(this)">Show Connections</button></div>
+<div class="chapter-connections" data-chapter-connections></div>
 <div class="chapter-body">
 <p id="chapter-1-1"><strong>1.</strong> The Holy Scripture is the only sufficient, certain and infallible rule of all saving knowledge, faith and obedience, although the light of nature and the works of creation and providence do so far manifest the goodness, wisdom and power of God, as to leave men inexcusable; yet are they not sufficient to give that knowledge of God and His will which is necessary unto salvation. Therefore it pleased the Lord at sundry times and in divers manners to reveal Himself, and to declare that His will unto His church; and afterwards for the better preserving and propagating of the truth, and for the more sure establishment and comfort of the church against the corruption of the flesh, and the malice of Satan, and of the world, to commit the same wholly unto writing; which maketh the Holy Scriptures to be most necessary, those former ways of God's revealing His will unto His people being now ceased.</p>
 <p id="chapter-1-2"><strong>2.</strong> Under the name of Holy Scripture, or the Word of God written, are now contained all the books of the Old and New Testaments, which are these: Genesis, Exodus, Leviticus, Numbers, Deuteronomy, Joshua, Judges, Ruth, 1 Samuel, 2 Samuel, 1 Kings, 2 Kings, 1 Chronicles, 2 Chronicles, Ezra, Nehemiah, Esther, Job, Psalms, Proverbs, Ecclesiastes, Song of Solomon, Isaiah, Jeremiah, Lamentations, Ezekiel, Daniel, Hosea, Joel, Amos, Obadiah, Jonah, Micah, Nahum, Habakkuk, Zephaniah, Haggai, Zechariah, Malachi; Matthew, Mark, Luke, John, Acts, Romans, 1 Corinthians, 2 Corinthians, Galatians, Ephesians, Philippians, Colossians, 1 Thessalonians, 2 Thessalonians, 1 Timothy, 2 Timothy, Titus, Philemon, Hebrews, James, 1 Peter, 2 Peter, 1 John, 2 John, 3 John, Jude, Revelation. All of which are given by the inspiration of God, to be the rule of faith and life.</p>
@@ -56,6 +101,8 @@
 
 <details class="chapter" id="chapter-2">
 <summary><span class="chapter-num">2</span><span class="chapter-title">Of God and of the Holy Trinity</span></summary>
+<div class="chapter-tools"><button class="chapter-connection-btn" type="button" onclick="toggleChapterConnections(this)">Show Connections</button></div>
+<div class="chapter-connections" data-chapter-connections></div>
 <div class="chapter-body">
 <p id="chapter-2-1"><strong>1.</strong> The Lord our God is but one only living and true God; whose subsistence is in and of Himself, infinite in being and perfection; whose essence cannot be comprehended by any but Himself; a most pure spirit, invisible, without body, parts, or passions, who only hath immortality, dwelling in the light which no man can approach unto; who is immutable, immense, eternal, incomprehensible, almighty, every way infinite, most holy, most wise, most free, most absolute; working all things according to the counsel of His own immutable and most righteous will, for His own glory; most loving, gracious, merciful, long-suffering, abundant in goodness and truth, forgiving iniquity, transgression, and sin; the rewarder of them that diligently seek Him, and withal most just and terrible in His judgments, hating all sin, and who will by no means clear the guilty.</p>
 <p id="chapter-2-2"><strong>2.</strong> God, having all life, glory, goodness, blessedness, in and of Himself, is alone in and unto Himself all-sufficient, not standing in need of any creature which He hath made, nor deriving any glory from them, but only manifesting His own glory in, by, unto, and upon them; He is the alone fountain of all being, of whom, through whom, and to whom are all things; and He hath most sovereign dominion over all creatures, to do by them, for them, or upon them whatsoever Himself pleaseth; in His sight all things are open and manifest, His knowledge is infinite, infallible, and independent upon the creature, so as nothing is to Him contingent or uncertain; He is most holy in all His counsels, in all His works, and in all His commands; to Him is due from angels and men, whatsoever worship, service, or obedience, as creatures they owe unto the Creator, and whatever He is further pleased to require of them.</p>
@@ -65,6 +112,8 @@
 
 <details class="chapter" id="chapter-3">
 <summary><span class="chapter-num">3</span><span class="chapter-title">Of God's Decree</span></summary>
+<div class="chapter-tools"><button class="chapter-connection-btn" type="button" onclick="toggleChapterConnections(this)">Show Connections</button></div>
+<div class="chapter-connections" data-chapter-connections></div>
 <div class="chapter-body">
 <p id="chapter-3-1"><strong>1.</strong> God hath decreed in Himself, from all eternity, by the most wise and holy counsel of His own will, freely and unchangeably, all things, whatsoever comes to pass; yet so as thereby is God neither the author of sin nor hath fellowship with any therein; nor is violence offered to the will of the creature, nor yet is the liberty or contingency of second causes taken away, but rather established; in which appears His wisdom in disposing all things, and power and faithfulness in accomplishing His decree.</p>
 <p id="chapter-3-2"><strong>2.</strong> Although God knoweth whatsoever may or can come to pass, upon all supposed conditions, yet hath He not decreed anything, because He foresaw it as future, or as that which would come to pass upon such conditions.</p>
@@ -78,6 +127,8 @@
 
 <details class="chapter" id="chapter-4">
 <summary><span class="chapter-num">4</span><span class="chapter-title">Of Creation</span></summary>
+<div class="chapter-tools"><button class="chapter-connection-btn" type="button" onclick="toggleChapterConnections(this)">Show Connections</button></div>
+<div class="chapter-connections" data-chapter-connections></div>
 <div class="chapter-body">
 <p id="chapter-4-1"><strong>1.</strong> In the beginning it pleased God the Father, Son, and Holy Spirit, for the manifestation of the glory of His eternal power, wisdom, and goodness, to create or make the world, and all things therein, whether visible or invisible, in the space of six days, and all very good.</p>
 <p id="chapter-4-2"><strong>2.</strong> After God had made all other creatures, He created man, male and female, with reasonable and immortal souls, rendering them fit unto that life to God for which they were created; being made after the image of God, in knowledge, righteousness, and true holiness; having the law of God written in their hearts, and power to fulfil it; and yet under a possibility of transgressing, being left to the liberty of their own will, which was subject unto change. Besides this law written in their hearts, they received a command not to eat of the tree of the knowledge of good and evil; which whilst they kept, they were happy in their communion with God, and had dominion over the creatures.</p>
@@ -85,6 +136,8 @@
 </details>
 <details class="chapter" id="chapter-5">
 <summary><span class="chapter-num">5</span><span class="chapter-title">Of Divine Providence</span></summary>
+<div class="chapter-tools"><button class="chapter-connection-btn" type="button" onclick="toggleChapterConnections(this)">Show Connections</button></div>
+<div class="chapter-connections" data-chapter-connections></div>
 <div class="chapter-body">
 <p id="chapter-5-1"><strong>1.</strong> God the good Creator of all things, in His infinite power and wisdom doth uphold, direct, dispose, and govern all creatures and things, from the greatest even to the least, by His most wise and holy providence, to the end for the which they were created, according unto His infallible foreknowledge, and the free and immutable counsel of His own will; to the praise of the glory of His wisdom, power, justice, infinite goodness, and mercy.</p>
 <p id="chapter-5-2"><strong>2.</strong> Although in relation to the foreknowledge and decree of God, the first cause, all things come to pass immutably and infallibly; so that there is not anything befalls any by chance, or without His providence; yet by the same providence He ordereth them to fall out according to the nature of second causes, either necessarily, freely, or contingently.</p>
@@ -98,6 +151,8 @@
 
 <details class="chapter" id="chapter-6">
 <summary><span class="chapter-num">6</span><span class="chapter-title">Of the Fall of Man, of Sin, and of the Punishment Thereof</span></summary>
+<div class="chapter-tools"><button class="chapter-connection-btn" type="button" onclick="toggleChapterConnections(this)">Show Connections</button></div>
+<div class="chapter-connections" data-chapter-connections></div>
 <div class="chapter-body">
 <p id="chapter-6-1"><strong>1.</strong> Although God created man upright and perfect, and gave him a righteous law, which had been unto life had he kept it, and threatened death upon the breach thereof, yet he did not long abide in this honour; Satan using the subtlety of the serpent to subdue Eve, then by her seducing Adam, who, without any compulsion, did willfully transgress the law of their creation, and the command given unto them, in eating the forbidden fruit, which God was pleased, according to His wise and holy counsel to permit, having purposed to order it to His own glory.</p>
 <p id="chapter-6-2"><strong>2.</strong> Our first parents, by this sin, fell from their original righteousness and communion with God, and we in them whereby death came upon all: all becoming dead in sin, and wholly defiled in all the faculties and parts of soul and body.</p>
@@ -109,6 +164,8 @@
 
 <details class="chapter" id="chapter-7">
 <summary><span class="chapter-num">7</span><span class="chapter-title">Of God&#x27;s Covenant</span></summary>
+<div class="chapter-tools"><button class="chapter-connection-btn" type="button" onclick="toggleChapterConnections(this)">Show Connections</button></div>
+<div class="chapter-connections" data-chapter-connections></div>
 <div class="chapter-body">
 <p id="chapter-7-1"><strong>1.</strong> The distance between God and the creature is so great, that although reasonable creatures do owe obedience to Him as their Creator, yet they could never have attained the reward of life but by some voluntary condescension on God's part, which He hath been pleased to express by way of covenant.</p>
 <p id="chapter-7-2"><strong>2.</strong> Moreover, man having brought himself under the curse of the law by his fall, it pleased the Lord to make a covenant of grace, wherein He freely offereth unto sinners life and salvation by Jesus Christ, requiring of them faith in Him, that they may be saved; and promising to give unto all those that are ordained unto eternal life, His Holy Spirit, to make them willing and able to believe.</p>
@@ -118,6 +175,8 @@
 
 <details class="chapter" id="chapter-8">
 <summary><span class="chapter-num">8</span><span class="chapter-title">Of Christ the Mediator</span></summary>
+<div class="chapter-tools"><button class="chapter-connection-btn" type="button" onclick="toggleChapterConnections(this)">Show Connections</button></div>
+<div class="chapter-connections" data-chapter-connections></div>
 <div class="chapter-body">
 <p id="chapter-8-1"><strong>1.</strong> It pleased God, in His eternal purpose, to choose and ordain the Lord Jesus, His only begotten Son, according to the covenant made between them both, to be the mediator between God and man; the prophet, priest, and king; head and saviour of the church, the heir of all things, and judge of the world; unto whom He did from all eternity give a people to be His seed and to be by Him in time redeemed, called, justified, sanctified, and glorified.</p>
 <p id="chapter-8-2"><strong>2.</strong> The Son of God, the second person in the Holy Trinity, being very and eternal God, the brightness of the Father's glory, of one substance and equal with Him who made the world, who upholdeth and governeth all things He hath made, did, when the fullness of time was come, take upon Him man's nature, with all the essential properties and common infirmities thereof, yet without sin; being conceived by the Holy Spirit in the womb of the Virgin Mary, the Holy Spirit coming down upon her: and the power of the Most High overshadowing her; and so was made of a woman of the tribe of Judah, of the seed of Abraham and David according to the Scriptures; so that two whole, perfect, and distinct natures were inseparably joined together in one person, without conversion, composition, or confusion; which person is very God and very man, yet one Christ, the only mediator between God and man.</p>
@@ -134,6 +193,8 @@
 
 <details class="chapter" id="chapter-9">
 <summary><span class="chapter-num">9</span><span class="chapter-title">Of Free Will</span></summary>
+<div class="chapter-tools"><button class="chapter-connection-btn" type="button" onclick="toggleChapterConnections(this)">Show Connections</button></div>
+<div class="chapter-connections" data-chapter-connections></div>
 <div class="chapter-body">
 <p id="chapter-9-1"><strong>1.</strong> God hath endued the will of man with that natural liberty and power of acting upon choice, that it is neither forced, nor by any necessity of nature determined to do good or evil.</p>
 <p id="chapter-9-2"><strong>2.</strong> Man, in his state of innocency, had freedom and power to will and to do that which was good and well-pleasing to God, but yet was unstable, so that he might fall from it.</p>
@@ -145,6 +206,8 @@
 
 <details class="chapter" id="chapter-10">
 <summary><span class="chapter-num">10</span><span class="chapter-title">Of Effectual Calling</span></summary>
+<div class="chapter-tools"><button class="chapter-connection-btn" type="button" onclick="toggleChapterConnections(this)">Show Connections</button></div>
+<div class="chapter-connections" data-chapter-connections></div>
 <div class="chapter-body">
 <p id="chapter-10-1"><strong>1.</strong> Those whom God hath predestinated unto life, He is pleased in His appointed, and accepted time, effectually to call, by His Word and Spirit, out of that state of sin and death in which they are by nature, to grace and salvation by Jesus Christ; enlightening their minds spiritually and savingly to understand the things of God; taking away their heart of stone, and giving unto them a heart of flesh; renewing their wills, and by His almighty power determining them to that which is good, and effectually drawing them to Jesus Christ; yet so as they come most freely, being made willing by His grace.</p>
 <p id="chapter-10-2"><strong>2.</strong> This effectual call is of God's free and special grace alone, not from anything at all foreseen in man, nor from any power or agency in the creature, being wholly passive therein, being dead in sins and trespasses, until being quickened and renewed by the Holy Spirit; he is thereby enabled to answer this call, and to embrace the grace offered and conveyed in it, and that by no less power than that which raised up Christ from the dead.</p>
@@ -155,6 +218,8 @@
 
 <details class="chapter" id="chapter-11">
 <summary><span class="chapter-num">11</span><span class="chapter-title">Of Justification</span></summary>
+<div class="chapter-tools"><button class="chapter-connection-btn" type="button" onclick="toggleChapterConnections(this)">Show Connections</button></div>
+<div class="chapter-connections" data-chapter-connections></div>
 <div class="chapter-body">
 <p id="chapter-11-1"><strong>1.</strong> Those whom God effectually calleth, He also freely justifieth, not by infusing righteousness into them, but by pardoning their sins, and by accounting and accepting their persons as righteous; not for anything wrought in them, or done by them, but for Christ's sake alone; not by imputing faith itself, the act of believing, or any other evangelical obedience to them, as their righteousness; but by imputing Christ's active obedience unto the whole law, and passive obedience in His death for their whole and sole righteousness by faith, which faith they have not of themselves; it is the gift of God.</p>
 <p id="chapter-11-2"><strong>2.</strong> Faith thus receiving and resting on Christ and His righteousness, is the alone instrument of justification; yet it is not alone in the person justified, but is ever accompanied with all other saving graces, and is no dead faith, but worketh by love.</p>
@@ -167,6 +232,8 @@
 
 <details class="chapter" id="chapter-12">
 <summary><span class="chapter-num">12</span><span class="chapter-title">Of Adoption</span></summary>
+<div class="chapter-tools"><button class="chapter-connection-btn" type="button" onclick="toggleChapterConnections(this)">Show Connections</button></div>
+<div class="chapter-connections" data-chapter-connections></div>
 <div class="chapter-body">
 <p id="chapter-12-1"><strong>1.</strong> All those that are justified, God vouchsafed, in and for the sake of His only Son Jesus Christ, to make partakers of the grace of adoption, by which they are taken into the number, and enjoy the liberties and privileges of the children of God, have His name put upon them, receive the spirit of adoption, have access to the throne of grace with boldness, are enabled to cry Abba, Father, are pitied, protected, provided for, and chastened by Him as by a Father, yet never cast off, but sealed to the day of redemption, and inherit the promises as heirs of everlasting salvation.</p>
 </div>
@@ -174,6 +241,8 @@
 
 <details class="chapter" id="chapter-13">
 <summary><span class="chapter-num">13</span><span class="chapter-title">Of Sanctification</span></summary>
+<div class="chapter-tools"><button class="chapter-connection-btn" type="button" onclick="toggleChapterConnections(this)">Show Connections</button></div>
+<div class="chapter-connections" data-chapter-connections></div>
 <div class="chapter-body">
 <p id="chapter-13-1"><strong>1.</strong> They who are united to Christ, effectually called, and regenerated, having a new heart and a new spirit created in them through the virtue of Christ's death and resurrection, are also farther sanctified, really and personally, through the same virtue, by His Word and Spirit dwelling in them; the dominion of the whole body of sin is destroyed, and the several lusts thereof are more and more weakened and mortified, and they more and more quickened and strengthened in all saving graces, to the practice of all true holiness, without which no man shall see the Lord.</p>
 <p id="chapter-13-2"><strong>2.</strong> This sanctification is throughout the whole man, yet imperfect in this life; there abideth still some remnants of corruption in every part, whence ariseth a continual and irreconcilable war; the flesh lusting against the Spirit, and the Spirit against the flesh.</p>
@@ -183,6 +252,8 @@
 
 <details class="chapter" id="chapter-14">
 <summary><span class="chapter-num">14</span><span class="chapter-title">Of Saving Faith</span></summary>
+<div class="chapter-tools"><button class="chapter-connection-btn" type="button" onclick="toggleChapterConnections(this)">Show Connections</button></div>
+<div class="chapter-connections" data-chapter-connections></div>
 <div class="chapter-body">
 <p id="chapter-14-1"><strong>1.</strong> The grace of faith, whereby the elect are enabled to believe to the saving of their souls, is the work of the Spirit of Christ in their hearts, and is ordinarily wrought by the ministry of the Word; by which also, and by the administration of baptism and the Lord's supper, prayer, and other means appointed of God, it is increased and strengthened.</p>
 <p id="chapter-14-2"><strong>2.</strong> By this faith a Christian believeth to be true whatsoever is revealed in the Word for the authority of God Himself, and also apprehendeth an excellency therein above all other writings and all things in the world, as it bears forth the glory of God in His attributes, the excellency of Christ in His nature and offices, and the power and fullness of the Holy Spirit in His workings and operations: and so is enabled to cast his soul upon the truth thus believed; and also acteth differently upon that which each particular passage thereof containeth; yielding obedience to the commands, trembling at the threatenings, and embracing the promises of God for this life and that which is to come; but the principal acts of saving faith have immediate relation to Christ, accepting, receiving, and resting upon Him alone for justification, sanctification, and eternal life, by virtue of the covenant of grace.</p>
@@ -192,6 +263,8 @@
 
 <details class="chapter" id="chapter-15">
 <summary><span class="chapter-num">15</span><span class="chapter-title">Of Repentance Unto Life and Salvation</span></summary>
+<div class="chapter-tools"><button class="chapter-connection-btn" type="button" onclick="toggleChapterConnections(this)">Show Connections</button></div>
+<div class="chapter-connections" data-chapter-connections></div>
 <div class="chapter-body">
 <p id="chapter-15-1"><strong>1.</strong> Such of the elect as are converted at riper years, having sometime lived in the state of nature, and therein served divers lusts and pleasures, God in their effectual calling giveth them repentance unto life.</p>
 <p id="chapter-15-2"><strong>2.</strong> Whereas there is none that doth good and sinneth not, and the best of men may, through the power and deceitfulness of their corruption dwelling in them, with the prevalency of temptation, fall into great sins and provocations; God hath, in the covenant of grace, mercifully provided that believers so sinning and falling be renewed through repentance unto salvation.</p>
@@ -203,6 +276,8 @@
 
 <details class="chapter" id="chapter-16">
 <summary><span class="chapter-num">16</span><span class="chapter-title">Of Good Works</span></summary>
+<div class="chapter-tools"><button class="chapter-connection-btn" type="button" onclick="toggleChapterConnections(this)">Show Connections</button></div>
+<div class="chapter-connections" data-chapter-connections></div>
 <div class="chapter-body">
 <p id="chapter-16-1"><strong>1.</strong> Good works are only such as God hath commanded in His Holy Word, and not such as without the warrant thereof are devised by men out of blind zeal, or upon any pretence of good intentions.</p>
 <p id="chapter-16-2"><strong>2.</strong> These good works, done in obedience to God's commandments, are the fruits and evidences of a true and lively faith; and by them believers manifest their thankfulness, strengthen their assurance, edify their brethren, adorn the profession of the Gospel, stop the mouths of the adversaries, and glorify God, whose workmanship they are, created in Christ Jesus thereunto, that having their fruit unto holiness they may have the end eternal life.</p>
@@ -216,6 +291,8 @@
 
 <details class="chapter" id="chapter-17">
 <summary><span class="chapter-num">17</span><span class="chapter-title">Of the Perseverance of the Saints</span></summary>
+<div class="chapter-tools"><button class="chapter-connection-btn" type="button" onclick="toggleChapterConnections(this)">Show Connections</button></div>
+<div class="chapter-connections" data-chapter-connections></div>
 <div class="chapter-body">
 <p id="chapter-17-1"><strong>1.</strong> Those whom God hath accepted in the beloved, effectually called and sanctified by His Spirit, and given the precious faith of His elect unto, can neither totally nor finally fall from the state of grace, but shall certainly persevere therein to the end, and be eternally saved, seeing the gifts and callings of God are without repentance, whence He still begets and nourisheth in them faith, repentance, love, joy, hope, and all the graces of the Spirit unto immortality; and though many storms and floods arise and beat against them, yet they shall never be able to take them off that foundation and rock which by faith they are fastened upon; notwithstanding, through unbelief and the temptations of Satan, the sensible sight of the light and love of God may for a time be clouded and obscured from them, yet He is still the same, and they shall be sure to be kept by the power of God unto salvation, where they shall enjoy their purchased possession, they being engraven upon the palm of His hands, and their names having been written in the book of life from all eternity.</p>
 <p id="chapter-17-2"><strong>2.</strong> This perseverance of the saints depends not upon their own free will, but upon the immutability of the decree of election, flowing from the free and unchangeable love of God the Father, upon the efficacy of the merit and intercession of Jesus Christ and union with Him, the oath of God, the abiding of His Spirit, and the seed of God within them, and the nature of the covenant of grace; from all which ariseth also the certainty and infallibility thereof.</p>
@@ -225,6 +302,8 @@
 
 <details class="chapter" id="chapter-18">
 <summary><span class="chapter-num">18</span><span class="chapter-title">Of the Assurance of Grace and Salvation</span></summary>
+<div class="chapter-tools"><button class="chapter-connection-btn" type="button" onclick="toggleChapterConnections(this)">Show Connections</button></div>
+<div class="chapter-connections" data-chapter-connections></div>
 <div class="chapter-body">
 <p id="chapter-18-1"><strong>1.</strong> Although temporary believers, and other unregenerate men, may vainly deceive themselves with false hopes and carnal presumptions of being in the favour of God and state of salvation, which hope of theirs shall perish; yet such as truly believe in the Lord Jesus, and love Him in sincerity, endeavouring to walk in all good conscience before Him, may in this life be certainly assured that they are in the state of grace, and may rejoice in the hope of the glory of God, which hope shall never make them ashamed.</p>
 <p id="chapter-18-2"><strong>2.</strong> This certainty is not a bare conjectural and probable persuasion grounded upon a fallible hope, but an infallible assurance of faith founded on the blood and righteousness of Christ revealed in the Gospel; and also upon the inward evidence of those graces of the Spirit unto which promises are made, and on the testimony of the Spirit of adoption, witnessing with our spirits that we are the children of God; and, as a fruit thereof, keeping the heart both humble and holy.</p>
@@ -235,6 +314,8 @@
 
 <details class="chapter" id="chapter-19">
 <summary><span class="chapter-num">19</span><span class="chapter-title">Of the Law of God</span></summary>
+<div class="chapter-tools"><button class="chapter-connection-btn" type="button" onclick="toggleChapterConnections(this)">Show Connections</button></div>
+<div class="chapter-connections" data-chapter-connections></div>
 <div class="chapter-body">
 <p id="chapter-19-1"><strong>1.</strong> God gave to Adam a law of universal obedience written in his heart, and a particular precept of not eating the fruit of the tree of knowledge of good and evil; by which He bound him and all his posterity to personal, entire, exact, and perpetual obedience; promised life upon the fulfilling, and threatened death upon the breach of it, and endued him with power and ability to keep it.</p>
 <p id="chapter-19-2"><strong>2.</strong> The same law that was first written in the heart of man continued to be a perfect rule of righteousness after the fall, and was delivered by God upon Mount Sinai, in ten commandments, and written in two tables, the four first containing our duty towards God, and the other six, our duty to man.</p>
@@ -248,6 +329,8 @@
 
 <details class="chapter" id="chapter-20">
 <summary><span class="chapter-num">20</span><span class="chapter-title">Of the Gospel, and of the Extent of the Grace Thereof</span></summary>
+<div class="chapter-tools"><button class="chapter-connection-btn" type="button" onclick="toggleChapterConnections(this)">Show Connections</button></div>
+<div class="chapter-connections" data-chapter-connections></div>
 <div class="chapter-body">
 <p id="chapter-20-1"><strong>1.</strong> The covenant of works being broken by sin, and made unprofitable unto life, God was pleased to give forth the promise of Christ, the seed of the woman, as the means of calling the elect, and begetting in them faith and repentance; in this promise the Gospel, as to the substance of it, was revealed, and is therein effectual for the conversion and salvation of sinners.</p>
 <p id="chapter-20-2"><strong>2.</strong> This promise of Christ, and salvation by Him, is revealed only by the Word of God; neither do the works of creation or providence, with the light of nature, make discovery of Christ, or of grace by Him, so much as in a general or obscure way; much less that men destitute of the revelation of Him by the promise or Gospel, should be enabled thereby to attain saving faith or repentance.</p>
@@ -258,6 +341,8 @@
 
 <details class="chapter" id="chapter-21">
 <summary><span class="chapter-num">21</span><span class="chapter-title">Of Christian Liberty and Liberty of Conscience</span></summary>
+<div class="chapter-tools"><button class="chapter-connection-btn" type="button" onclick="toggleChapterConnections(this)">Show Connections</button></div>
+<div class="chapter-connections" data-chapter-connections></div>
 <div class="chapter-body">
 <p id="chapter-21-1"><strong>1.</strong> The liberty which Christ hath purchased for believers under the Gospel, consists in their freedom from the guilt of sin, the condemning wrath of God, the rigour and curse of the law, and in their being delivered from this present evil world, bondage to Satan, and dominion of sin, from the evil of afflictions, the fear and sting of death, the victory of the grave, and everlasting damnation: as also in their free access to God, and their yielding obedience unto Him, not out of slavish fear, but a child-like love and willing mind. All which were common also to believers under the law for the substance of them; but under the New Testament the liberty of Christians is further enlarged, in their freedom from the yoke of a ceremonial law, to which the Jewish church was subjected, and in greater boldness of access to the throne of grace, and in fuller communications of the free Spirit of God, than believers under the law did ordinarily partake of.</p>
 <p id="chapter-21-2"><strong>2.</strong> God alone is Lord of the conscience, and hath left it free from the doctrines and commandments of men which are in any thing contrary to His Word, or not contained in it. So that to believe such doctrines, or obey such commands out of conscience, is to betray true liberty of conscience; and the requiring of an implicit faith, an absolute and blind obedience, is to destroy liberty of conscience and reason also.</p>
@@ -267,6 +352,8 @@
 
 <details class="chapter" id="chapter-22">
 <summary><span class="chapter-num">22</span><span class="chapter-title">Of Religious Worship and the Sabbath Day</span></summary>
+<div class="chapter-tools"><button class="chapter-connection-btn" type="button" onclick="toggleChapterConnections(this)">Show Connections</button></div>
+<div class="chapter-connections" data-chapter-connections></div>
 <div class="chapter-body">
 <p id="chapter-22-1"><strong>1.</strong> The light of nature shews that there is a God, who hath lordship and sovereignty over all; is just, good and doth good unto all; and is therefore to be feared, loved, praised, called upon, trusted in, and served, with all the heart and all the soul, and with all the might. But the acceptable way of worshipping the true God, is instituted by Himself, and so limited by His own revealed will, that He may not be worshipped according to the imagination and devices of men, nor the suggestions of Satan, under any visible representations, or any other way not prescribed in the Holy Scriptures.</p>
 <p id="chapter-22-2"><strong>2.</strong> Religious worship is to be given to God the Father, Son, and Holy Spirit, and to Him alone; not to angels, saints, or any other creatures; and since the fall, not without a mediator, nor in the mediation of any other but Christ alone.</p>
@@ -281,6 +368,8 @@
 
 <details class="chapter" id="chapter-23">
 <summary><span class="chapter-num">23</span><span class="chapter-title">Of Lawful Oaths and Vows</span></summary>
+<div class="chapter-tools"><button class="chapter-connection-btn" type="button" onclick="toggleChapterConnections(this)">Show Connections</button></div>
+<div class="chapter-connections" data-chapter-connections></div>
 <div class="chapter-body">
 <p id="chapter-23-1"><strong>1.</strong> A lawful oath is a part of religious worship, wherein the person swearing in truth, righteousness, and judgement, solemnly calleth God to witness what he sweareth, and to judge him according to the truth or falseness thereof.</p>
 <p id="chapter-23-2"><strong>2.</strong> The name of God only is that by which men ought to swear; and therein it is to be used, with all holy fear and reverence; therefore to swear vainly or rashly by that glorious and dreadful name, or to swear at all by any other thing, is sinful, and to be abhorred; yet as in matter of weight and moment, for confirmation of truth, and ending all strife, an oath is warranted by the Word of God; so a lawful oath being imposed by lawful authority in such matters, ought to be taken.</p>
@@ -292,6 +381,8 @@
 
 <details class="chapter" id="chapter-24">
 <summary><span class="chapter-num">24</span><span class="chapter-title">Of the Civil Magistrate</span></summary>
+<div class="chapter-tools"><button class="chapter-connection-btn" type="button" onclick="toggleChapterConnections(this)">Show Connections</button></div>
+<div class="chapter-connections" data-chapter-connections></div>
 <div class="chapter-body">
 <p id="chapter-24-1"><strong>1.</strong> God, the supreme Lord and King of all the world, hath ordained civil magistrates to be under Him, over the people, for His own glory and the public good; and to this end hath armed them with the power of the sword, for defence and encouragement of them that do good, and for the punishment of evil doers.</p>
 <p id="chapter-24-2"><strong>2.</strong> It is lawful for Christians to accept and execute the office of a magistrate when called there unto; in the management whereof, as they ought especially to maintain justice and peace, according to the wholesome laws of each kingdom and commonwealth, so for that end they may lawfully now, under the New Testament wage war upon just and necessary occasions.</p>
@@ -301,6 +392,8 @@
 
 <details class="chapter" id="chapter-25">
 <summary><span class="chapter-num">25</span><span class="chapter-title">Of Marriage</span></summary>
+<div class="chapter-tools"><button class="chapter-connection-btn" type="button" onclick="toggleChapterConnections(this)">Show Connections</button></div>
+<div class="chapter-connections" data-chapter-connections></div>
 <div class="chapter-body">
 <p id="chapter-25-1"><strong>1.</strong> Marriage is to be between one man and one woman; neither is it lawful for any man to have more than one wife, nor for any woman to have more than one husband at the same time.</p>
 <p id="chapter-25-2"><strong>2.</strong> Marriage was ordained for the mutual help of husband and wife, for the increase of mankind with a legitimate issue, and the preventing of uncleanness.</p>
@@ -311,6 +404,8 @@
 
 <details class="chapter" id="chapter-26">
 <summary><span class="chapter-num">26</span><span class="chapter-title">Of the Church</span></summary>
+<div class="chapter-tools"><button class="chapter-connection-btn" type="button" onclick="toggleChapterConnections(this)">Show Connections</button></div>
+<div class="chapter-connections" data-chapter-connections></div>
 <div class="chapter-body">
 <p id="chapter-26-1"><strong>1.</strong> The catholic or universal church, which (with respect to the internal work of the Spirit and truth of grace) may be called invisible, consists of the whole number of the elect, that have been, are, or shall be gathered into one, under Christ, the Head thereof; and is the spouse, the body, the fullness of Him that filleth all in all.</p>
 <p id="chapter-26-2"><strong>2.</strong> All persons throughout the world, professing the faith of the Gospel, and obedience unto God by Christ according unto it, not destroying their own profession by any errors everting the foundation, or unholiness of conversation, are and may be called visible saints; and of such ought all particular congregations to be constituted.</p>
@@ -332,6 +427,8 @@
 
 <details class="chapter" id="chapter-27">
 <summary><span class="chapter-num">27</span><span class="chapter-title">Of the Communion of Saints</span></summary>
+<div class="chapter-tools"><button class="chapter-connection-btn" type="button" onclick="toggleChapterConnections(this)">Show Connections</button></div>
+<div class="chapter-connections" data-chapter-connections></div>
 <div class="chapter-body">
 <p id="chapter-27-1"><strong>1.</strong> All saints that are united to Jesus Christ, their Head, by His Spirit, and faith, although they are not made thereby one person with Him, have fellowship in His graces, sufferings, death, resurrection, and glory; and, being united to one another in love, they have communion in each others gifts and graces, and are obliged to the performance of such duties, public and private, in an orderly way, as do conduce to their mutual good, both in the inward and outward man.</p>
 <p id="chapter-27-2"><strong>2.</strong> Saints by profession are bound to maintain an holy fellowship and communion in the worship of God, and in performing such other spiritual services as tend to their mutual edification; as also in relieving each other in outward things according to their several abilities, and necessities; which communion, according to the rule of the Gospel, though especially to be exercised by them, in the relation wherein they stand, whether in families, or churches, yet, as God offereth opportunity, is to be extended to all the household of faith, even all those who in every place call upon the name of the Lord Jesus; nevertheless their communion one with another as saints, doth not take away or infringe the title or propriety which each man hath in his goods and possessions.</p>
@@ -340,6 +437,8 @@
 
 <details class="chapter" id="chapter-28">
 <summary><span class="chapter-num">28</span><span class="chapter-title">Of Baptism and the Lord&#x27;s Supper</span></summary>
+<div class="chapter-tools"><button class="chapter-connection-btn" type="button" onclick="toggleChapterConnections(this)">Show Connections</button></div>
+<div class="chapter-connections" data-chapter-connections></div>
 <div class="chapter-body">
 <p id="chapter-28-1"><strong>1.</strong> Baptism and the Lord's Supper are ordinances of positive and sovereign institution, appointed by the Lord Jesus, the only lawgiver, to be continued in His church to the end of the world.</p>
 <p id="chapter-28-2"><strong>2.</strong> These holy appointments are to be administered by those only who are qualified and thereunto called, according to the commission of Christ.</p>
@@ -348,6 +447,8 @@
 
 <details class="chapter" id="chapter-29">
 <summary><span class="chapter-num">29</span><span class="chapter-title">Of Baptism</span></summary>
+<div class="chapter-tools"><button class="chapter-connection-btn" type="button" onclick="toggleChapterConnections(this)">Show Connections</button></div>
+<div class="chapter-connections" data-chapter-connections></div>
 <div class="chapter-body">
 <p id="chapter-29-1"><strong>1.</strong> Baptism is an ordinance of the New Testament, ordained by Jesus Christ, to be unto the party baptized, a sign of his fellowship with Him, in His death and resurrection; of his being engrafted into Him; of remission of sins; and of giving up into God, through Jesus Christ, to live and walk in newness of life.</p>
 <p id="chapter-29-2"><strong>2.</strong> Those who do actually profess repentance towards God, faith in, and obedience to, our Lord Jesus Christ, are the only proper subjects of this ordinance.</p>
@@ -358,6 +459,8 @@
 
 <details class="chapter" id="chapter-30">
 <summary><span class="chapter-num">30</span><span class="chapter-title">Of the Lord&#x27;s Supper</span></summary>
+<div class="chapter-tools"><button class="chapter-connection-btn" type="button" onclick="toggleChapterConnections(this)">Show Connections</button></div>
+<div class="chapter-connections" data-chapter-connections></div>
 <div class="chapter-body">
 <p id="chapter-30-1"><strong>1.</strong> The supper of the Lord Jesus was instituted by Him the same night wherein He was betrayed, to be observed in His churches, unto the end of the world, for the perpetual remembrance, and shewing forth the sacrifice of Himself in His death, confirmation of the faith of believers in all the benefits thereof, their spiritual nourishment, and growth in Him, their further engagement in, and to all duties which they owe to Him; and to be a bond and pledge of their communion with Him, and with each other.</p>
 <p id="chapter-30-2"><strong>2.</strong> In this ordinance Christ is not offered up to His Father, nor any real sacrifice made at all for remission of sin of the quick or dead, but only a memorial of that one offering up of Himself by Himself upon the cross, once for all; and a spiritual oblation of all possible praise unto God for the same. So that the popish sacrifice of the mass, as they call it, is most abominable, injurious to Christ's own sacrifice the alone propitiation for all the sins of the elect.</p>
@@ -372,6 +475,8 @@
 
 <details class="chapter" id="chapter-31">
 <summary><span class="chapter-num">31</span><span class="chapter-title">Of the State of Man After Death, and of the Resurrection of the Dead</span></summary>
+<div class="chapter-tools"><button class="chapter-connection-btn" type="button" onclick="toggleChapterConnections(this)">Show Connections</button></div>
+<div class="chapter-connections" data-chapter-connections></div>
 <div class="chapter-body">
 <p id="chapter-31-1"><strong>1.</strong> The bodies of men after death return to dust, and see corruption; but their souls, which neither die nor sleep, having an immortal subsistence, immediately return to God who gave them. The souls of the righteous being then made perfect in holiness, are received into paradise, where they are with Christ, and behold the face of God in light and glory, waiting for the full redemption of their bodies; and the souls of the wicked are cast into hell; where they remain in torment and utter darkness, reserved to the judgment of the great day; besides these two places, for souls separated from their bodies, the Scripture acknowledgeth none.</p>
 <p id="chapter-31-2"><strong>2.</strong> At the last day, such of the saints as are found alive, shall not sleep, but be changed; and all the dead shall be raised up with the selfsame bodies, and none other; although with different qualities, which shall be united again to their souls forever.</p>
@@ -381,6 +486,8 @@
 
 <details class="chapter" id="chapter-32">
 <summary><span class="chapter-num">32</span><span class="chapter-title">Of the Last Judgment</span></summary>
+<div class="chapter-tools"><button class="chapter-connection-btn" type="button" onclick="toggleChapterConnections(this)">Show Connections</button></div>
+<div class="chapter-connections" data-chapter-connections></div>
 <div class="chapter-body">
 <p id="chapter-32-1"><strong>1.</strong> God hath appointed a day wherein He will judge the world in righteousness, by Jesus Christ; to whom all power and judgment is given of the Father; in which day, not only the apostate angels shall be judged, but likewise all persons that have lived upon the earth shall appear before the tribunal of Christ, to give an account of their thoughts, words, and deeds, and to receive according to what they have done in the body, whether good or evil.</p>
 <p id="chapter-32-2"><strong>2.</strong> The end of God's appointing this day, is for the manifestation of the glory of His mercy, in the eternal salvation of the elect; and of His justice, in the eternal damnation of the reprobate, who are wicked and disobedient; for then shall the righteous go into everlasting life, and receive that fulness of joy and glory with everlasting rewards, in the presence of the Lord; but the wicked, who know not God, and obey not the Gospel of Jesus Christ, shall be cast aside into everlasting torments, and punished with everlasting destruction, from the presence of the Lord, and from the glory of His power.</p>
@@ -396,6 +503,78 @@
 </div>
 
 <script>
+const historicalConnections = {
+  "preface": {
+    items: [
+      ["1689", "Developed", "The Preface explicitly identifies the 1689 Confession as standing in continuity with the earlier Particular Baptist confession and says its order follows the Assembly and the Congregational confession."],
+      ["Westminster / Savoy", "Inherited", "The Preface itself points to the Assembly and to the Congregational tradition as the immediate confessional context for the arrangement." ]
+    ]
+  },
+"chapter-1": {items:[["Westminster / Savoy", "Modified", "Nearly word-for-word identical to Westminster and Savoy (which match each other exactly here), except two changes unique to 1689: 'good and necessary consequence' becomes 'necessarily contained,' and the final paragraph's 'the Holy Spirit speaking in the Scripture' becomes 'the Holy Scripture delivered by the Spirit... our faith is finally resolved.'"]]},
+"chapter-2": {items:[["Nicaea / Constantinople", "Inherited", "The doctrine of God stands within the Nicene-Trinitarian grammar of one God in three persons."],["Westminster / Savoy", "Developed", "1689 substantially expands the opening paragraph's divine attributes (adding phrases like 'infinite in being and perfection' and 'dwelling in the light which no man can approach unto') and adds a closing clause identifying the Trinity as 'the foundation of all our communion with God' not present in Westminster or Savoy."]]},
+"chapter-3": {items:[["Westminster / Savoy", "Modified", "1689 omits Westminster and Savoy's explicit reprobation paragraph ('God was pleased... to ordain them to dishonour and wrath for their sin'), moving directly from the doctrine of election to the pastoral caution about handling predestination carefully."]]},
+"chapter-4": {items:[["Westminster / Savoy", "Inherited", "Matches Westminster and Savoy almost verbatim, with only minor cosmetic wording differences."]]},
+"chapter-5": {items:[["Westminster / Savoy", "Inherited", "Follows Westminster and Savoy's doctrine of providence closely, with only minor added phrasing."]]},
+"chapter-6": {items:[["Savoy", "Inherited", "1689 follows Savoy's addition of federal headship language ('by God's appointment standing in the room and stead of all mankind') which is absent from Westminster's plainer wording at this point."],["Westminster / Savoy", "Added", "1689 adds a further clause not in either earlier confession: 'being now conceived in sin, and by nature children of wrath, the servants of sin... unless the Lord Jesus set them free.'"]]},
+  "chapter-7": {items:[["Westminster / Savoy", "Developed", "The covenant chapter belongs to the Reformed covenantal tradition but is especially important for the 1689's distinct formulation of the covenant of grace as progressively revealed and formally established in the New Covenant."]]},
+  "chapter-8": {items:[["Chalcedon", "Inherited", "The chapter's doctrine of Christ presupposes the one person, truly divine and truly human, confessed in the catholic Christological tradition."],["Westminster / Savoy", "Inherited", "The chapter follows the Reformed confessional treatment of Christ's person and mediatorial work."]]},
+  "chapter-9": {items:[["Westminster / Savoy", "Inherited", "The doctrine of free will follows the established Reformed treatment while using the 1689's own formulation."]]},
+  "chapter-10": {items:[["Westminster / Savoy", "Inherited", "The chapter follows the Reformed doctrine of effectual calling and distinguishes God's saving work from merely external hearing."]]},
+  "chapter-11": {items:[["Westminster / Savoy", "Inherited", "The chapter substantially follows the Reformed confessional doctrine of justification, including the distinction between imputed righteousness and works."]]},
+  "chapter-12": {items:[["Westminster / Savoy", "Inherited", "The doctrine of adoption follows the established Reformed confessional treatment of believers' filial status in Christ."]]},
+  "chapter-13": {items:[["Westminster / Savoy", "Inherited", "The doctrine of sanctification follows the established Reformed confessional account of progressive holiness and the continuing conflict with sin."]]},
+  "chapter-14": {items:[["Westminster / Savoy", "Inherited", "The doctrine of saving faith follows the Reformed confessional pattern while emphasizing the believer's receiving and resting upon Christ."]]},
+  "chapter-15": {items:[["Westminster / Savoy", "Inherited", "The doctrine of repentance follows the established Reformed treatment of repentance unto life."]]},
+  "chapter-16": {items:[["Westminster / Savoy", "Inherited", "The doctrine of good works follows the established Reformed confessional distinction between works as the fruit of faith and works as a ground of acceptance."]]},
+  "chapter-17": {items:[["Westminster / Savoy", "Inherited", "The doctrine of perseverance follows the Reformed confessional account of God's preserving grace and the perseverance of the saints."]]},
+  "chapter-18": {items:[["Westminster / Savoy", "Inherited", "The doctrine of assurance follows the established Reformed treatment of the believer's assurance of grace and salvation."]]},
+  "chapter-19": {items:[["Westminster / Savoy", "Modified", "The chapter retains the Reformed distinction between moral obligation and ceremonial/judicial aspects of the Mosaic economy, while its particular Baptist covenantal framework affects how the old covenant is described."]]},
+  "chapter-20": {items:[["Westminster / Savoy", "Inherited", "The doctrine of the gospel and its grace follows the established Reformed treatment of salvation by Christ and faith."]]},
+  "chapter-21": {items:[["Westminster / Savoy", "Inherited", "The doctrine of Christian liberty and conscience follows the Reformed confessional treatment of liberty from human religious authority and sinful bondage."]]},
+  "chapter-22": {items:[["Westminster / Savoy", "Modified", "The chapter substantially inherits the Reformed doctrine of religious worship while reflecting the 1689's Baptist ecclesiological setting and its treatment of positive divine institution."]]},
+  "chapter-23": {items:[["Westminster / Savoy", "Inherited", "The doctrine of the civil magistrate follows the Reformed confessional tradition while retaining the 1689's particular wording and historical context."]]},
+  "chapter-24": {items:[["Westminster / Savoy", "Inherited", "The doctrine of marriage follows the established Reformed confessional treatment, with the 1689's own formulation."]]},
+  "chapter-25": {items:[["Westminster / Savoy", "Inherited", "The doctrine of the church substantially follows the Reformed confessional framework while expressing the particular Baptist understanding of a visible church."]]},
+  "chapter-26": {items:[["Westminster / Savoy", "Developed", "The chapter's treatment of church communion and local church order belongs to the Reformed inheritance but is expressed within a distinctly congregational Baptist ecclesiology."]]},
+  "chapter-27": {items:[["Westminster / Savoy", "Modified", "The doctrine of the ordinances retains the Reformed sacramental/ordinance framework while preparing for the explicitly Baptist treatment of baptism and the Supper in the following chapters."]]},
+  "chapter-28": {items:[["Westminster / Savoy", "Modified", "The chapter identifies baptism and the Lord's Supper as Christ's positive ordinances and frames their administration within the Baptist confession's church order."]]},
+  "chapter-29": {items:[["1689", "Added", "The explicitly believer-only and immersion-specific treatment of baptism is a distinctive Baptist development within the broader Reformed confessional inheritance."]]},
+  "chapter-30": {items:[["Westminster / Savoy", "Modified", "The doctrine of the Lord's Supper retains the Reformed rejection of a repeated sacrifice and corporeal presence while expressing the Baptist confession's own ordinance terminology and practice."]]},
+  "chapter-31": {items:[["Westminster / Savoy", "Inherited", "The doctrine of the intermediate state and resurrection follows the established Reformed confessional pattern."]]},
+  "chapter-32": {items:[["Westminster / Savoy", "Inherited", "The doctrine of final judgment and eternal destinies follows the established Reformed confessional framework."]]}
+};
+
+function renderConnections(chapterId, container){
+  const data = historicalConnections[chapterId];
+  if(!data){
+    container.innerHTML = '<p>No chapter-level connection notes have been entered yet.</p>';
+    return;
+  }
+  container.innerHTML = '<h3>Historical connections</h3>' + data.items.map(item =>
+    `<div class="connection-item"><span class="connection-label">${item[0]}</span><span class="connection-status">${item[1]}</span><div>${item[2]}</div></div>`
+  ).join('');
+}
+
+function toggleChapterConnections(button){
+  const chapter = button.closest('details.chapter');
+  const panel = chapter.querySelector('[data-chapter-connections]');
+  if(!panel.innerHTML) renderConnections(chapter.id, panel);
+  const active = panel.classList.toggle('active');
+  button.textContent = active ? 'Hide Connections' : 'Show Connections';
+}
+
+function toggleConnections(){
+  const on = document.body.classList.toggle('connections-on');
+  const panel = document.getElementById('connectionPanel');
+  panel.classList.toggle('active', on);
+  document.getElementById('connectionsBtn').textContent = on ? 'Hide Historical Connections' : 'Show Historical Connections';
+  document.querySelectorAll('.chapter[data-chapter-connections], details.chapter').forEach(()=>{});
+  document.querySelectorAll('details.chapter').forEach(chapter => {
+    const panel = chapter.querySelector('[data-chapter-connections]');
+    if(panel && !panel.innerHTML) renderConnections(chapter.id, panel);
+  });
+}
+
 function toggleAll(){
   const details = document.querySelectorAll('details.chapter');
   const anyClosed = Array.from(details).some(d => !d.open);
