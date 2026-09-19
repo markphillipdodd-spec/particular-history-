@@ -44,6 +44,8 @@ body.connections-on .chapter-connections{display:block}
     <h1>The Second London Confession</h1>
     <p>The confession of faith of upwards of one hundred Particular Baptist congregations, agreed in London, 1689. Original wording preserved throughout.</p>
   </header>
+</div>
+<div class="wrap">
 
 <div class="connection-controls" style="display: flex !important; gap: 0.65rem; margin: 2rem 0; visibility: visible !important; opacity: 1 !important;">
   <button class="expand-all-btn" id="expandAllBtn" onclick="toggleAll()" style="display: inline-block !important; background: #b58b3a; color: #121212; border: none; border-radius: 6px; padding: 0.55rem 1rem; cursor: pointer; font-size: 0.95rem; font-weight: bold; font-family: inherit;">Expand All</button>
