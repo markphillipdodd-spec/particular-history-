@@ -693,7 +693,7 @@ function renderConnections(chapterId, container) {
     let descriptionText = item[2];
     
     // Prefix the target path with your accurate directory subfolder context
-    let docPath = sourceName.toLowerCase().includes('westminster') ? 'westminster.html' : 'savoy.html';
+    let docPath = sourceName.toLowerCase().includes('westminster') ? 'westminster-confession-1646.html' : 'savoy-declaration-1658.html';
     if (sourceName.toLowerCase().includes('nicaea') || sourceName.toLowerCase().includes('chalcedon') || sourceName.toLowerCase().includes('1689')) {
       docPath = '#'; 
     }
@@ -749,7 +749,7 @@ function toggleConnections() {
     const chP = ch.querySelector('[data-chapter-connections]');
     if (chP) {
       if (on) {
-        renderConnections(ch.id, chP);
+ function    renderConnections(ch.id, chP);
         chP.classList.add('active');
       } else {
         chP.classList.remove('active');
