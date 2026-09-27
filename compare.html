@@ -5,10 +5,145 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Compare Creeds &middot; Particular History</title>
 <link rel="stylesheet" href="styles.css">
+
+<style>
+/* =========================================================
+   COMPARE PAGE
+   ========================================================= */
+
+.compare-controls {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr 1fr;
+  gap: .75rem;
+  margin: 2rem 0 2.5rem;
+}
+
+.compare-controls select {
+  width: 100%;
+  padding: .8rem .9rem;
+  border: 1px solid rgba(255,255,255,.14);
+  border-radius: 6px;
+  background: rgba(255,255,255,.04);
+  color: inherit;
+  font: inherit;
+}
+
+.compare-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+  align-items: start;
+}
+
+.compare-col {
+  min-width: 0;
+}
+
+.compare-col-header {
+  margin-bottom: 1rem;
+  padding-bottom: .9rem;
+  border-bottom: 1px solid rgba(255,255,255,.12);
+}
+
+.compare-col-header h2 {
+  margin: 0 0 .25rem;
+  font-size: 1.15rem;
+}
+
+.compare-col-header .src-year {
+  font-size: .78rem;
+  opacity: .65;
+}
+
+.compare-passage {
+  margin: 0 0 1.1rem;
+  padding: 1.2rem 1.2rem 1.1rem;
+  border-left: 2px solid var(--gold);
+  background: rgba(255,255,255,.025);
+}
+
+.compare-passage blockquote {
+  margin: 0;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1rem;
+  line-height: 1.7;
+}
+
+.passage-location {
+  margin-top: .8rem;
+  font-size: .75rem;
+  color: var(--gold);
+  letter-spacing: .02em;
+}
+
+.passage-location a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.passage-location a:hover {
+  text-decoration: underline;
+}
+
+.compare-note {
+  padding: 1.1rem;
+  border: 1px dashed rgba(255,255,255,.15);
+  border-radius: 5px;
+  opacity: .7;
+  font-size: .9rem;
+  line-height: 1.55;
+}
+
+.topic-description {
+  margin: -.75rem 0 1.5rem;
+  opacity: .72;
+  font-size: .9rem;
+  line-height: 1.55;
+}
+
+.topic-group {
+  margin-top: 3rem;
+}
+
+.topic-group-title {
+  margin-bottom: .8rem;
+  color: var(--gold);
+  font-size: .75rem;
+  text-transform: uppercase;
+  letter-spacing: .12em;
+}
+
+.document-count {
+  text-align: center;
+  margin-top: 1.5rem;
+  font-size: .75rem;
+  opacity: .55;
+}
+
+@media (max-width: 700px) {
+  .compare-controls {
+    grid-template-columns: 1fr;
+  }
+
+  .compare-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .compare-col + .compare-col {
+    margin-top: 1rem;
+  }
+}
+</style>
 </head>
+
 <body>
+
 <div class="wrap">
-  <div class="brand"><a href="index.html">Particular History</a></div>
+
+  <div class="brand">
+    <a href="index.html">Particular History</a>
+  </div>
+
   <nav class="site-nav">
     <a href="index.html">Home</a>
     <a href="church.html">Church</a>
@@ -20,117 +155,1206 @@
   <header class="page-head">
     <div class="eyebrow">Read them in their own words</div>
     <h1>Compare Creeds</h1>
-    <p>Choose a topic and two documents. These texts are centuries old and in the public domain, so you're reading the actual words, not a summary.</p>
+    <p>
+      Choose a topic and two documents. Read the historical texts side by side,
+      with references back to the full source.
+    </p>
   </header>
 
   <div class="compare-controls">
-    <select id="topic"></select>
-    <select id="docA"></select>
-    <select id="docB"></select>
+    <select id="topic" aria-label="Choose a topic"></select>
+    <select id="docA" aria-label="Choose first document"></select>
+    <select id="docB" aria-label="Choose second document"></select>
   </div>
+
+  <div id="topicDescription" class="topic-description"></div>
 
   <div class="compare-grid">
     <div class="compare-col" id="colA"></div>
     <div class="compare-col" id="colB"></div>
   </div>
 
-  <p style="text-align:center; margin-top:2.5rem;"><a href="texts/index.html" style="color:var(--gold);">Read the full, unexcerpted text of each document &rarr;</a></p>
+  <p class="document-count" id="documentCount"></p>
 
-  <footer class="site-footer">a prototype &middot; excerpts are historic public-domain texts</footer>
+  <p style="text-align:center; margin-top:2.5rem;">
+    <a href="texts/index.html" style="color:var(--gold);">
+      Read the full, unexcerpted text of each document &rarr;
+    </a>
+  </p>
+
+  <footer class="site-footer">
+    a prototype &middot; excerpts are historic public-domain texts
+  </footer>
+
 </div>
 
 <script>
+
+/* =========================================================
+   DOCUMENTS
+   ========================================================= */
+
 const DOCS = {
-  nicene: { name: "Nicene-Constantinopolitan Creed", year: "325 / 381" },
-  chalcedon: { name: "Chalcedonian Definition", year: "451" },
-  belgic: { name: "Belgic Confession", year: "1561" },
-  westminster: { name: "Westminster Confession", year: "1646" },
-  savoy: { name: "Savoy Declaration", year: "1658" },
-  lbc1689: { name: "Second London Confession", year: "1689" }
+
+  nicene: {
+    name: "Nicene-Constantinopolitan Creed",
+    shortName: "Nicene Creed",
+    year: "325 / 381",
+    era: "Ancient",
+    href: "texts/nicene-325.html"
+  },
+
+  constantinople381: {
+    name: "Council of Constantinople",
+    shortName: "Constantinople",
+    year: "381",
+    era: "Ancient",
+    href: "texts/constantinople-381.html"
+  },
+
+  ephesus: {
+    name: "Council of Ephesus",
+    shortName: "Ephesus",
+    year: "431",
+    era: "Ancient",
+    href: "texts/ephesus-431.html"
+  },
+
+  chalcedon: {
+    name: "Chalcedonian Definition",
+    shortName: "Chalcedon",
+    year: "451",
+    era: "Ancient",
+    href: "texts/chalcedon-451.html"
+  },
+
+  constantinople680: {
+    name: "Third Council of Constantinople",
+    shortName: "Constantinople III",
+    year: "680–681",
+    era: "Ancient",
+    href: "texts/constantinople-iii-680.html"
+  },
+
+  wycliffe: {
+    name: "Wycliffe & the Lollards",
+    shortName: "Wycliffe & Lollards",
+    year: "c. 1380",
+    era: "Pre-Reformation",
+    href: null
+  },
+
+  belgic: {
+    name: "Belgic Confession",
+    shortName: "Belgic",
+    year: "1561",
+    era: "Reformation",
+    href: "texts/belgic-confession-1561.html"
+  },
+
+  dort: {
+    name: "Canons of Dort",
+    shortName: "Dort",
+    year: "1618–1619",
+    era: "Reformation",
+    href: "texts/canons-of-dort-1618.html"
+  },
+
+  westminster: {
+    name: "Westminster Confession",
+    shortName: "Westminster",
+    year: "1646",
+    era: "Federal",
+    href: "texts/westminster-confession-1646.html"
+  },
+
+  savoy: {
+    name: "Savoy Declaration",
+    shortName: "Savoy",
+    year: "1658",
+    era: "Federal",
+    href: "texts/savoy-declaration-1658.html"
+  },
+
+  lbc1689: {
+    name: "Second London Confession",
+    shortName: "1689",
+    year: "1689",
+    era: "Particular Baptist",
+    href: "texts/second-london-confession-1689.html"
+  }
+
 };
+
+
+/* =========================================================
+   TOPICS
+   =========================================================
+
+   Each topic contains:
+
+   label
+   group
+   description
+   passages:
+      document key:
+        [
+          {
+            location: "Chapter / Article",
+            text: "Exact passage",
+            href: "optional direct source link"
+          }
+        ]
+
+   Multiple passages are allowed.
+   An empty document entry is intentionally different
+   from claiming the document is historically silent.
+   ========================================================= */
 
 const TOPICS = {
+
+  /* ---------------- GOD ---------------- */
+
   trinity: {
+    group: "God",
     label: "The Trinity",
-    quotes: {
-      nicene: "We believe in one God, the Father Almighty... And in one Lord Jesus Christ, the only-begotten Son of God... And in the Holy Spirit, the Lord and Giver of Life, who proceeds from the Father, who with the Father and the Son together is worshipped and glorified.",
-      westminster: "In the unity of the Godhead there be three persons of one substance, power, and eternity: God the Father, God the Son, and God the Holy Ghost.",
-      lbc1689: "In this divine and infinite Being there are three subsistences, the Father, the Word, and Holy Spirit, of one substance, power, and eternity, each having the whole divine essence."
+    description: "How the documents confess the one God as Father, Son, and Holy Spirit.",
+    passages: {
+
+      nicene: [
+        {
+          location: "Creed",
+          text: "We believe in one God, the Father Almighty, Maker of heaven and earth, and of all things visible and invisible."
+        },
+        {
+          location: "Creed",
+          text: "And in one Lord Jesus Christ, the only-begotten Son of God, begotten of his Father before all worlds, God of God, Light of Light, very God of very God."
+        }
+      ],
+
+      constantinople381: [
+        {
+          location: "Creed",
+          text: "And in the Holy Ghost, the Lord and Giver of Life, who proceedeth from the Father; who with the Father and the Son together is worshipped and glorified."
+        }
+      ],
+
+      belgic: [
+        {
+          location: "Article 8 — The Trinity",
+          text: "According to this truth and this Word of God, we believe in one only God, who is one single essence, in which are three persons, really, truly, and eternally distinct according to their incommunicable properties."
+        }
+      ],
+
+      westminster: [
+        {
+          location: "Chapter 2, §3",
+          text: "In the unity of the Godhead there be three persons, of one substance, power, and eternity: God the Father, God the Son, and God the Holy Ghost."
+        }
+      ],
+
+      savoy: [
+        {
+          location: "Chapter 2, §3",
+          text: "In the unity of the Godhead there be three persons, of one substance, power, and eternity: God the Father, God the Son, and God the Holy Ghost."
+        }
+      ],
+
+      lbc1689: [
+        {
+          location: "Chapter 2, §3",
+          text: "In this divine and infinite Being there are three subsistences, the Father, the Word or Son, and Holy Spirit, of one substance, power, and eternity, each having the whole divine essence, yet the essence undivided."
+        }
+      ]
     }
   },
+
+
+  /* ---------------- CHRIST ---------------- */
+
   christ: {
+    group: "Christ",
     label: "The Person of Christ",
-    quotes: {
-      chalcedon: "One and the same Christ, Son, Lord, only-begotten, to be acknowledged in two natures, without confusion, without change, without division, without separation.",
-      westminster: "Two whole, perfect, and distinct natures were inseparably joined together in one person, without conversion, composition, or confusion.",
-      lbc1689: "So that two whole, perfect, and distinct natures were inseparably joined together in one person, without conversion, composition, or confusion."
+    description: "How the documents confess the identity of the Son incarnate.",
+    passages: {
+
+      nicene: [
+        {
+          location: "Creed",
+          text: "Begotten, not made; being of one substance with the Father; by whom all things were made."
+        }
+      ],
+
+      ephesus: [
+        {
+          location: "Definition / Council",
+          text: "We confess one Lord Jesus Christ, and acknowledge one Christ, one Son, one Lord."
+        }
+      ],
+
+      chalcedon: [
+        {
+          location: "Definition",
+          text: "One and the same Christ, Son, Lord, only-begotten, to be acknowledged in two natures, without confusion, without change, without division, without separation."
+        }
+      ],
+
+      constantinople680: [
+        {
+          location: "Definition",
+          text: "We likewise proclaim two natural wills or volitions in him, and two natural operations, without division, without change, without separation, without confusion."
+        }
+      ],
+
+      belgic: [
+        {
+          location: "Article 19 — The Union and Distinction of the Two Natures",
+          text: "We believe that by this conception the person of the Son is inseparably united and connected with the human nature."
+        }
+      ],
+
+      westminster: [
+        {
+          location: "Chapter 8, §2",
+          text: "The Son of God, the second person in the Trinity, being very and eternal God, of one substance and equal with the Father, did, when the fulness of time was come, take upon him man's nature."
+        }
+      ],
+
+      savoy: [
+        {
+          location: "Chapter 8, §2",
+          text: "The Son of God, the second person in the Trinity, being very and eternal God, of one substance and equal with the Father, did, when the fulness of time was come, take upon him man's nature."
+        }
+      ],
+
+      lbc1689: [
+        {
+          location: "Chapter 8, §2",
+          text: "The Son of God, the second person in the Holy Trinity, being very and eternal God, the brightness of the Father's glory, of one substance and equal with him, who made the world, who upholdeth and governeth all things he hath made, did, when the fulness of time was come, take upon him man's nature."
+        }
+      ]
     }
   },
+
+
+  /* ---------------- SCRIPTURE ---------------- */
+
   scripture: {
-    label: "The Authority of Scripture",
-    quotes: {
-      belgic: "We receive all these books, and these only, as holy and canonical, for the regulating, founding, and establishing of our faith.",
-      westminster: "The authority of the Holy Scripture... dependeth not upon the testimony of any man or Church, but wholly upon God, the author thereof.",
-      lbc1689: "The authority of the Holy Scripture... dependeth not upon the testimony of any man or church, but wholly upon God the author thereof."
+    group: "Scripture & Revelation",
+    label: "Authority of Scripture",
+    description: "What grounds Scripture's authority and how Scripture relates to human or ecclesiastical authority.",
+    passages: {
+
+      belgic: [
+        {
+          location: "Article 3 — The Written Word of God",
+          text: "We confess that this Word of God was not sent nor delivered by the will of man, but that holy men of God spake as they were moved by the Holy Ghost."
+        },
+        {
+          location: "Article 7 — The Sufficiency of Scripture",
+          text: "We believe that those Holy Scriptures fully contain the will of God, and that whatsoever man ought to believe unto salvation is sufficiently taught therein."
+        }
+      ],
+
+      westminster: [
+        {
+          location: "Chapter 1, §4",
+          text: "The authority of the Holy Scripture, for which it ought to be believed, and obeyed, dependeth not upon the testimony of any man or Church, but wholly upon God, the author thereof."
+        }
+      ],
+
+      savoy: [
+        {
+          location: "Chapter 1, §4",
+          text: "The authority of the Holy Scripture, for which it ought to be believed, and obeyed, dependeth not upon the testimony of any man or Church, but wholly upon God, the author thereof."
+        }
+      ],
+
+      lbc1689: [
+        {
+          location: "Chapter 1, §4",
+          text: "The authority of the Holy Scripture, for which it ought to be believed, and obeyed, dependeth not upon the testimony of any man, or Church, but wholly upon God, the author thereof."
+        }
+      ]
     }
   },
-  covenant: {
+
+
+  sufficiency: {
+    group: "Scripture & Revelation",
+    label: "Sufficiency of Scripture",
+    description: "Whether Scripture contains everything necessary for God's revealed will and saving faith.",
+    passages: {
+
+      belgic: [
+        {
+          location: "Article 7",
+          text: "We believe that those Holy Scriptures fully contain the will of God, and that whatsoever man ought to believe unto salvation is sufficiently taught therein."
+        }
+      ],
+
+      westminster: [
+        {
+          location: "Chapter 1, §6",
+          text: "The whole counsel of God concerning all things necessary for his own glory, man's salvation, faith and life, is either expressly set down in Scripture, or by good and necessary consequence may be deduced from Scripture."
+        }
+      ],
+
+      savoy: [
+        {
+          location: "Chapter 1, §6",
+          text: "The whole counsel of God concerning all things necessary for his own glory, man's salvation, faith and life, is either expressly set down in Scripture, or by good and necessary consequence may be deduced from Scripture."
+        }
+      ],
+
+      lbc1689: [
+        {
+          location: "Chapter 1, §6",
+          text: "The whole counsel of God concerning all things necessary for his own glory, man's salvation, faith and life, is either expressly set down or necessarily contained in the Holy Scripture."
+        }
+      ]
+    }
+  },
+
+
+  /* ---------------- SALVATION ---------------- */
+
+  justification: {
+    group: "Salvation",
+    label: "Justification",
+    description: "How sinners are counted righteous before God.",
+    passages: {
+
+      belgic: [
+        {
+          location: "Article 22 — Justification by Faith in Jesus Christ",
+          text: "We believe that, to attain the true knowledge of this great mystery, the Holy Ghost kindleth in our hearts an upright faith, which embraces Jesus Christ, with all his merits, appropriates him, and seeks nothing more besides him."
+        },
+        {
+          location: "Article 23 — The Justification of Sinners",
+          text: "We believe that our blessedness lies in the forgiveness of our sins for Jesus Christ's sake, and that therein our righteousness before God is implied."
+        }
+      ],
+
+      westminster: [
+        {
+          location: "Chapter 11, §1",
+          text: "Those whom God effectually calleth, he also freely justifieth: not by infusing righteousness into them, but by pardoning their sins, and by accounting and accepting their persons as righteous."
+        },
+        {
+          location: "Chapter 11, §2",
+          text: "Faith, thus receiving and resting on Christ and his righteousness, is the alone instrument of justification."
+        }
+      ],
+
+      savoy: [
+        {
+          location: "Chapter 11, §1",
+          text: "Those whom God effectually calleth, he also freely justifieth: not by infusing righteousness into them, but by pardoning their sins."
+        },
+        {
+          location: "Chapter 11, §2",
+          text: "Faith, thus receiving and resting on Christ and his righteousness, is the alone instrument of justification."
+        }
+      ],
+
+      lbc1689: [
+        {
+          location: "Chapter 11, §1",
+          text: "Those whom God effectually calleth, he also freely justifieth, not by infusing righteousness into them, but by pardoning their sins, and by accounting and accepting their persons as righteous."
+        },
+        {
+          location: "Chapter 11, §2",
+          text: "Faith thus receiving and resting on Christ and his righteousness, is the alone instrument of justification."
+        }
+      ]
+    }
+  },
+
+
+  election: {
+    group: "Salvation",
+    label: "Election",
+    description: "How the documents describe God's eternal purpose in salvation.",
+    passages: {
+
+      dort: [
+        {
+          location: "First Head, Article 7",
+          text: "Election is the unchangeable purpose of God, whereby, before the foundation of the world was laid, he hath chosen, out of the whole human race, which had fallen of its own fault from its primitive state of rectitude into sin and destruction, a certain number of persons to redemption in Christ."
+        }
+      ],
+
+      westminster: [
+        {
+          location: "Chapter 3, §5",
+          text: "Those of mankind that are predestinated unto life, God, before the foundation of the world was laid, according to his eternal and immutable purpose, and the secret counsel and good pleasure of his will, hath chosen, in Christ, unto everlasting glory."
+        }
+      ],
+
+      savoy: [
+        {
+          location: "Chapter 3, §5",
+          text: "Those of mankind that are predestinated unto life, God, before the foundation of the world was laid, according to his eternal and immutable purpose, and the secret counsel and good pleasure of his will, hath chosen in Christ unto everlasting glory."
+        }
+      ],
+
+      lbc1689: [
+        {
+          location: "Chapter 3, §5",
+          text: "Those of mankind that are predestinated to life, God, before the foundation of the world was laid, according to his eternal and immutable purpose, and the secret counsel and good pleasure of his will, hath chosen in Christ unto everlasting glory."
+        }
+      ]
+    }
+  },
+
+
+  atonement: {
+    group: "Salvation",
+    label: "Christ's Atoning Work",
+    description: "What the death of Christ accomplishes for sinners.",
+    passages: {
+
+      belgic: [
+        {
+          location: "Article 21 — The Satisfaction of Christ",
+          text: "We believe that Jesus Christ is ordained and appointed an everlasting High Priest, with an oath, according to the order of Melchisedec."
+        }
+      ],
+
+      westminster: [
+        {
+          location: "Chapter 8, §5",
+          text: "The Lord Jesus, by his perfect obedience and sacrifice of himself, which he through the eternal Spirit once offered up unto God, hath fully satisfied the justice of his Father."
+        }
+      ],
+
+      savoy: [
+        {
+          location: "Chapter 8, §5",
+          text: "The Lord Jesus, by his perfect obedience and sacrifice of himself, which he through the eternal Spirit once offered up unto God, hath fully satisfied the justice of his Father."
+        }
+      ],
+
+      lbc1689: [
+        {
+          location: "Chapter 8, §5",
+          text: "The Lord Jesus, by his perfect obedience and sacrifice of himself, which he through the eternal Spirit once offered up unto God, hath fully satisfied the justice of God."
+        }
+      ]
+    }
+  },
+
+
+  perseverance: {
+    group: "Salvation",
+    label: "Perseverance of the Saints",
+    description: "Whether those truly united to Christ can finally fall away.",
+    passages: {
+
+      dort: [
+        {
+          location: "Fifth Head, Article 3",
+          text: "By reason of these remains of indwelling sin, and also because of the temptations of the world and of Satan, those who are converted could not persevere in that grace if left to their own strength."
+        }
+      ],
+
+      westminster: [
+        {
+          location: "Chapter 17, §1",
+          text: "They, whom God hath accepted in his Beloved, effectually called and sanctified by his Spirit, can neither totally nor finally fall away from the state of grace, but shall certainly persevere therein to the end, and be eternally saved."
+        }
+      ],
+
+      savoy: [
+        {
+          location: "Chapter 17, §1",
+          text: "They, whom God hath accepted in his Beloved, effectually called and sanctified by his Spirit, can neither totally nor finally fall away from the state of grace."
+        }
+      ],
+
+      lbc1689: [
+        {
+          location: "Chapter 17, §1",
+          text: "Those whom God hath accepted in his beloved Son, effectually called and sanctified by his Spirit, and given the precious faith of his elect unto, can neither totally nor finally fall away from the state of grace."
+        }
+      ]
+    }
+  },
+
+
+  /* ---------------- COVENANT ---------------- */
+
+  covenantGrace: {
+    group: "Covenant",
     label: "The Covenant of Grace",
-    quotes: {
-      westminster: "The Lord was pleased to make a second covenant, commonly called the covenant of grace: wherein he freely offereth unto sinners life and salvation by Jesus Christ.",
-      lbc1689: "This covenant is revealed in the gospel; first of all in the promise of salvation to Adam... afterwards, by farther steps, until the full discovery thereof was completed in the New Testament."
+    description: "How the Reformed confessions describe the covenant of grace and its relation to salvation.",
+    passages: {
+
+      westminster: [
+        {
+          location: "Chapter 7, §2",
+          text: "The first covenant made with man was a covenant of works, wherein life was promised to Adam, and in him to his posterity, upon condition of perfect and personal obedience."
+        },
+        {
+          location: "Chapter 7, §3",
+          text: "The Lord was pleased to make a second, commonly called the covenant of grace; whereby he freely offereth unto sinners life and salvation by Jesus Christ."
+        }
+      ],
+
+      savoy: [
+        {
+          location: "Chapter 7, §2",
+          text: "The first covenant made with man was a covenant of works, wherein life was promised to Adam, and in him to his posterity, upon condition of perfect and personal obedience."
+        },
+        {
+          location: "Chapter 7, §3",
+          text: "The Lord was pleased to make a second, commonly called the covenant of grace; whereby he freely offereth unto sinners life and salvation by Jesus Christ."
+        }
+      ],
+
+      lbc1689: [
+        {
+          location: "Chapter 7, §2",
+          text: "The first covenant made with man was a covenant of works, wherein life was promised to Adam, and in him to his posterity, upon condition of perfect and personal obedience."
+        },
+        {
+          location: "Chapter 7, §3",
+          text: "This covenant is revealed in the gospel; first of all to Adam in the promise of salvation by the seed of the woman, and afterwards by farther steps, until the full discovery thereof was completed in the New Testament."
+        }
+      ]
     }
   },
+
+
+  covenantWorks: {
+    group: "Covenant",
+    label: "The Covenant of Works",
+    description: "How the confessions describe Adam's original covenant obligation.",
+    passages: {
+
+      westminster: [
+        {
+          location: "Chapter 7, §1",
+          text: "The distance between God and the creature is so great, that although reasonable creatures do owe obedience unto him as their Creator, yet they could never have any fruition of him as their blessedness and reward, but by some voluntary condescension on God's part, which he hath been pleased to express by way of covenant."
+        },
+        {
+          location: "Chapter 7, §2",
+          text: "The first covenant made with man was a covenant of works, wherein life was promised to Adam, and in him to his posterity, upon condition of perfect and personal obedience."
+        }
+      ],
+
+      savoy: [
+        {
+          location: "Chapter 7, §1",
+          text: "The distance between God and the creature is so great, that although reasonable creatures do owe obedience unto him as their Creator, yet they could never have any fruition of him as their blessedness and reward, but by some voluntary condescension on God's part."
+        }
+      ],
+
+      lbc1689: [
+        {
+          location: "Chapter 7, §1",
+          text: "The distance between God and the creature is so great, that although reasonable creatures do owe obedience unto him as their Creator, yet they could never have any fruition of him as their blessedness and reward, but by some voluntary condescension on God's part."
+        },
+        {
+          location: "Chapter 7, §2",
+          text: "The first covenant made with man was a covenant of works, wherein life was promised to Adam, and in him to his posterity, upon condition of perfect and personal obedience."
+        }
+      ]
+    }
+  },
+
+
+  newCovenant: {
+    group: "Covenant",
+    label: "The New Covenant",
+    description: "How the confessions understand the New Covenant in relation to the covenant of grace.",
+    passages: {
+
+      westminster: [
+        {
+          location: "Chapter 7, §5",
+          text: "This covenant was differently administered in the time of the law, and in the time of the gospel."
+        }
+      ],
+
+      savoy: [
+        {
+          location: "Chapter 7, §5",
+          text: "This covenant was differently administered in the time of the law, and in the time of the gospel."
+        }
+      ],
+
+      lbc1689: [
+        {
+          location: "Chapter 7, §3",
+          text: "This covenant is revealed in the gospel; first of all to Adam in the promise of salvation by the seed of the woman, and afterwards by farther steps, until the full discovery thereof was completed in the New Testament."
+        }
+      ]
+    }
+  },
+
+
+  /* ---------------- BAPTISM ---------------- */
+
   baptism: {
-    label: "The Subjects of Baptism",
-    quotes: {
-      westminster: "Not only those that do actually profess faith in and obedience unto Christ, but also the infants of one or both believing parents, are to be baptized.",
-      lbc1689: "Those who do actually profess repentance towards God, faith in, and obedience to our Lord Jesus Christ, are the only proper subjects of this ordinance."
+    group: "Church & Ordinances",
+    label: "Baptism",
+    description: "What baptism signifies and how the confessions define its proper subjects.",
+    passages: {
+
+      belgic: [
+        {
+          location: "Article 34 — Holy Baptism",
+          text: "We believe and confess that Jesus Christ, who is the end of the law, hath made an end of the shedding of blood, which he hath united to himself."
+        }
+      ],
+
+      westminster: [
+        {
+          location: "Chapter 28, §4",
+          text: "Not only those that do actually profess faith in and obedience unto Christ, but also the infants of one or both believing parents, are to be baptized."
+        }
+      ],
+
+      savoy: [
+        {
+          location: "Chapter 29, §2",
+          text: "Those who do actually profess faith in and obedience unto Christ are the only proper subjects of this ordinance."
+        }
+      ],
+
+      lbc1689: [
+        {
+          location: "Chapter 29, §2",
+          text: "Those who do actually profess repentance towards God, faith in, and obedience to, our Lord Jesus Christ, are the only proper subjects of this ordinance."
+        }
+      ]
+    }
+  },
+
+
+  lordSupper: {
+    group: "Church & Ordinances",
+    label: "The Lord's Supper",
+    description: "How the confessions understand the nature and purpose of the Lord's Supper.",
+    passages: {
+
+      westminster: [
+        {
+          location: "Chapter 29, §1",
+          text: "Our Lord Jesus hath instituted a sacrament of his body and blood, called the Lord's Supper, to be observed in his churches, unto the end of the world."
+        }
+      ],
+
+      savoy: [
+        {
+          location: "Chapter 30, §1",
+          text: "The Lord Jesus hath, in the night wherein he was betrayed, instituted the sacrament of his body and blood, called the Lord's Supper."
+        }
+      ],
+
+      lbc1689: [
+        {
+          location: "Chapter 30, §1",
+          text: "The Lord Jesus hath, in the night wherein he was betrayed, instituted the sacrament of his body and blood, called the Lord's Supper, to be observed in his churches unto the end of the world."
+        }
+      ]
+    }
+  },
+
+
+  /* ---------------- CHURCH ---------------- */
+
+  church: {
+    group: "Church & Ordinances",
+    label: "The Church",
+    description: "How the confessions describe Christ's church and its visible life.",
+    passages: {
+
+      belgic: [
+        {
+          location: "Article 27 — The Catholic or Universal Church",
+          text: "We believe and profess one catholic or universal Church, which is a holy congregation and assembly of the true Christian believers."
+        }
+      ],
+
+      westminster: [
+        {
+          location: "Chapter 25, §1",
+          text: "The catholic or universal Church, which is invisible, consists of the whole number of the elect, that have been, are, or shall be gathered into one, under Christ the Head thereof."
+        }
+      ],
+
+      savoy: [
+        {
+          location: "Chapter 26, §1",
+          text: "The catholic or universal Church, which is invisible, consists of the whole number of the elect, that have been, are, or shall be gathered into one, under Christ the Head thereof."
+        }
+      ],
+
+      lbc1689: [
+        {
+          location: "Chapter 26, §1",
+          text: "The catholic or universal church, which is invisible, consists of the whole number of the elect, that have been, are, or shall be gathered into one, under Christ the head thereof."
+        }
+      ]
+    }
+  },
+
+
+  churchGovernment: {
+    group: "Church & Ordinances",
+    label: "Church Government",
+    description: "How the later confessions describe the authority and government of local churches.",
+    passages: {
+
+      westminster: [
+        {
+          location: "Chapter 30, §1",
+          text: "The Lord Jesus, as King and Head of his Church, hath therein appointed a government, in the hand of Church officers, distinct from the civil magistrate."
+        }
+      ],
+
+      savoy: [
+        {
+          location: "Chapter 26, §4",
+          text: "To each of these churches thus gathered, according to his mind declared in his word, he hath given all that power and authority, which is in any way needful for their carrying on that order in worship and discipline."
+        }
+      ],
+
+      lbc1689: [
+        {
+          location: "Chapter 26, §7",
+          text: "To each of these churches thus gathered, according to his mind declared in his word, he hath given all that power and authority, which is in any way needful for their carrying on that order in worship and discipline."
+        }
+      ]
+    }
+  },
+
+
+  /* ---------------- WORSHIP ---------------- */
+
+  worship: {
+    group: "Worship",
+    label: "Worship",
+    description: "How the confessions define the proper object and manner of religious worship.",
+    passages: {
+
+      belgic: [
+        {
+          location: "Article 32 — The Order and Discipline of the Church",
+          text: "We believe, nevertheless, that although it is useful and beneficial that those who are rulers of the Church institute and establish certain ordinances among themselves for maintaining the body of the Church, they ought studiously to take care that they do not depart from those things which Christ our only Master hath ordained."
+        }
+      ],
+
+      westminster: [
+        {
+          location: "Chapter 21, §1",
+          text: "The light of nature showeth that there is a God, who hath lordship and sovereignty over all, is good, and doeth good unto all, and is therefore to be feared, loved, praised, called upon, trusted in, and served, with all the heart, and with all the soul, and with all the might."
+        },
+        {
+          location: "Chapter 21, §1",
+          text: "But the acceptable way of worshipping the true God is instituted by himself, and so limited by his own revealed will."
+        }
+      ],
+
+      lbc1689: [
+        {
+          location: "Chapter 22, §1",
+          text: "The light of nature sheweth that there is a God, who hath lordship and sovereignty over all; is good, and doth good unto all; and is therefore to be feared, loved, praised, called upon, trusted in, and served, with all the heart, and with all the soul, and with all the might."
+        },
+        {
+          location: "Chapter 22, §1",
+          text: "But the acceptable way of worshipping the true God is instituted by himself, and so limited by his own revealed will."
+        }
+      ]
+    }
+  },
+
+
+  /* ---------------- LAW & LIFE ---------------- */
+
+  goodWorks: {
+    group: "Christian Life",
+    label: "Good Works",
+    description: "The place of obedience and good works in the Christian life.",
+    passages: {
+
+      westminster: [
+        {
+          location: "Chapter 16, §2",
+          text: "These good works, done in obedience to God's commandments, are the fruits and evidences of a true and lively faith."
+        }
+      ],
+
+      savoy: [
+        {
+          location: "Chapter 16, §2",
+          text: "These good works, done in obedience to God's commandments, are the fruits and evidences of a true and lively faith."
+        }
+      ],
+
+      lbc1689: [
+        {
+          location: "Chapter 16, §2",
+          text: "These good works, done in obedience to God's commandments, are the fruits and evidences of a true and lively faith."
+        }
+      ]
+    }
+  },
+
+
+  law: {
+    group: "Christian Life",
+    label: "The Moral Law",
+    description: "How the confessions understand the continuing role and use of God's law.",
+    passages: {
+
+      westminster: [
+        {
+          location: "Chapter 19, §2",
+          text: "This law, after his fall, continued to be a perfect rule of righteousness; and, as such, was delivered by God upon mount Sinai, in ten commandments."
+        }
+      ],
+
+      savoy: [
+        {
+          location: "Chapter 19, §2",
+          text: "This law, after his fall, continued to be a perfect rule of righteousness; and, as such, was delivered by God upon mount Sinai, in ten commandments."
+        }
+      ],
+
+      lbc1689: [
+        {
+          location: "Chapter 19, §2",
+          text: "This law, after his fall, continued to be a perfect rule of righteousness; and, as such, was delivered by God upon mount Sinai, in ten commandments."
+        }
+      ]
+    }
+  },
+
+
+  /* ---------------- LAST THINGS ---------------- */
+
+  resurrection: {
+    group: "Last Things",
+    label: "Resurrection",
+    description: "The resurrection of the dead and the final state.",
+    passages: {
+
+      belgic: [
+        {
+          location: "Article 37 — The Last Judgment",
+          text: "Then shall all men personally appear before this great Judge, both men and women and children, that have been from the beginning of the world unto the end thereof."
+        }
+      ],
+
+      westminster: [
+        {
+          location: "Chapter 32, §2",
+          text: "At the last day, such as are found alive shall not die, but be changed; and all the dead shall be raised up, with the selfsame bodies, and none other, although with different qualities, which shall be united again to their souls forever."
+        }
+      ],
+
+      savoy: [
+        {
+          location: "Chapter 32, §2",
+          text: "At the last day, such as are found alive shall not die, but be changed; and all the dead shall be raised up with the selfsame bodies, and none other."
+        }
+      ],
+
+      lbc1689: [
+        {
+          location: "Chapter 31, §2",
+          text: "At the last day, such as are found alive shall not die, but be changed; and all the dead shall be raised up with the selfsame bodies, and none other."
+        }
+      ]
+    }
+  },
+
+
+  finalJudgment: {
+    group: "Last Things",
+    label: "Final Judgment",
+    description: "The final judgment and its eternal consequences.",
+    passages: {
+
+      westminster: [
+        {
+          location: "Chapter 33, §1",
+          text: "God hath appointed a day, wherein he will judge the world in righteousness, by Jesus Christ, to whom all power and judgment is given of the Father."
+        }
+      ],
+
+      savoy: [
+        {
+          location: "Chapter 33, §1",
+          text: "God hath appointed a day, wherein he will judge the world in righteousness, by Jesus Christ."
+        }
+      ],
+
+      lbc1689: [
+        {
+          location: "Chapter 32, §1",
+          text: "God hath appointed a day, wherein he will judge the world in righteousness, by Jesus Christ, to whom all power and judgment is given of the Father."
+        }
+      ]
     }
   }
+
 };
 
-const topicSel = document.getElementById('topic');
-const docASel = document.getElementById('docA');
-const docBSel = document.getElementById('docB');
 
-Object.entries(TOPICS).forEach(([key, t]) => {
-  const opt = document.createElement('option');
-  opt.value = key; opt.textContent = t.label;
-  topicSel.appendChild(opt);
+/* =========================================================
+   UI
+   ========================================================= */
+
+const topicSel = document.getElementById("topic");
+const docASel = document.getElementById("docA");
+const docBSel = document.getElementById("docB");
+const topicDescription = document.getElementById("topicDescription");
+const documentCount = document.getElementById("documentCount");
+
+
+/* =========================================================
+   POPULATE TOPICS
+   ========================================================= */
+
+const groupedTopics = {};
+
+Object.entries(TOPICS).forEach(([key, topic]) => {
+
+  if (!groupedTopics[topic.group]) {
+    groupedTopics[topic.group] = [];
+  }
+
+  groupedTopics[topic.group].push([key, topic]);
+
 });
 
-function populateDocs(select, defaultKey){
-  Object.entries(DOCS).forEach(([key, d]) => {
-    const opt = document.createElement('option');
-    opt.value = key; opt.textContent = `${d.name} (${d.year})`;
-    select.appendChild(opt);
+
+Object.entries(groupedTopics).forEach(([group, topics]) => {
+
+  const optgroup = document.createElement("optgroup");
+  optgroup.label = group;
+
+  topics.forEach(([key, topic]) => {
+
+    const opt = document.createElement("option");
+
+    opt.value = key;
+    opt.textContent = topic.label;
+
+    optgroup.appendChild(opt);
+
   });
+
+  topicSel.appendChild(optgroup);
+
+});
+
+
+/* =========================================================
+   POPULATE DOCUMENTS
+   ========================================================= */
+
+function populateDocs(select, defaultKey) {
+
+  Object.entries(DOCS).forEach(([key, doc]) => {
+
+    const opt = document.createElement("option");
+
+    opt.value = key;
+    opt.textContent = `${doc.name} (${doc.year})`;
+
+    select.appendChild(opt);
+
+  });
+
   select.value = defaultKey;
 }
-populateDocs(docASel, 'westminster');
-populateDocs(docBSel, 'lbc1689');
 
-function render(){
-  const topicKey = topicSel.value;
-  const topic = TOPICS[topicKey];
-  [ ['colA', docASel.value], ['colB', docBSel.value] ].forEach(([colId, docKey]) => {
-    const doc = DOCS[docKey];
-    const quote = topic.quotes[docKey];
-    const col = document.getElementById(colId);
-    col.innerHTML = `
-      <h3>${doc.name}</h3>
-      <span class="src-year">A.D. ${doc.year}</span>
-      ${ quote
-        ? `<blockquote>&ldquo;${quote}&rdquo;</blockquote>`
-        : `<p class="compare-note">This document does not address &ldquo;${topic.label}&rdquo; as a distinct topic &mdash; it wasn't yet a live question, or the point was assumed rather than stated.</p>` }
-    `;
-  });
+populateDocs(docASel, "westminster");
+populateDocs(docBSel, "lbc1689");
+
+
+/* =========================================================
+   URL STATE
+   ========================================================= */
+
+function loadURLState() {
+
+  const params = new URLSearchParams(window.location.search);
+
+  if (params.get("topic") && TOPICS[params.get("topic")]) {
+    topicSel.value = params.get("topic");
+  }
+
+  if (params.get("docA") && DOCS[params.get("docA")]) {
+    docASel.value = params.get("docA");
+  }
+
+  if (params.get("docB") && DOCS[params.get("docB")]) {
+    docBSel.value = params.get("docB");
+  }
+
 }
 
-[topicSel, docASel, docBSel].forEach(sel => sel.addEventListener('change', render));
-topicSel.value = 'covenant';
+
+function updateURL() {
+
+  const params = new URLSearchParams();
+
+  params.set("topic", topicSel.value);
+  params.set("docA", docASel.value);
+  params.set("docB", docBSel.value);
+
+  history.replaceState(
+    null,
+    "",
+    `${window.location.pathname}?${params.toString()}`
+  );
+
+}
+
+
+/* =========================================================
+   RENDER
+   ========================================================= */
+
+function renderColumn(colId, docKey, topicKey) {
+
+  const col = document.getElementById(colId);
+  const doc = DOCS[docKey];
+  const topic = TOPICS[topicKey];
+
+  const passages =
+    topic.passages &&
+    topic.passages[docKey]
+      ? topic.passages[docKey]
+      : [];
+
+  let html = `
+    <div class="compare-col-header">
+      <h2>${doc.name}</h2>
+      <span class="src-year">A.D. ${doc.year}</span>
+    </div>
+  `;
+
+
+  if (!passages.length) {
+
+    html += `
+      <div class="compare-note">
+        <strong>No passage indexed yet.</strong><br>
+        This comparison does not currently contain a passage from
+        ${doc.name} on this topic.
+        <br><br>
+        That is not a claim that the document is silent on the subject.
+      </div>
+    `;
+
+    col.innerHTML = html;
+    return;
+
+  }
+
+
+  passages.forEach((passage) => {
+
+    const sourceLink = passage.href || doc.href;
+
+    html += `
+      <article class="compare-passage">
+
+        <blockquote>
+          &ldquo;${passage.text}&rdquo;
+        </blockquote>
+
+        <div class="passage-location">
+
+          ${
+            sourceLink
+            ? `<a href="${sourceLink}">
+                ${passage.location}
+                &nbsp;&rarr;
+                Read in context
+              </a>`
+            : passage.location
+          }
+
+        </div>
+
+      </article>
+    `;
+
+  });
+
+
+  col.innerHTML = html;
+
+}
+
+
+/* =========================================================
+   MAIN RENDER
+   ========================================================= */
+
+function render() {
+
+  const topicKey = topicSel.value;
+  const topic = TOPICS[topicKey];
+
+  topicDescription.textContent = topic.description;
+
+  renderColumn("colA", docASel.value, topicKey);
+  renderColumn("colB", docBSel.value, topicKey);
+
+  const indexedA =
+    topic.passages &&
+    topic.passages[docASel.value]
+      ? topic.passages[docASel.value].length
+      : 0;
+
+  const indexedB =
+    topic.passages &&
+    topic.passages[docBSel.value]
+      ? topic.passages[docBSel.value].length
+      : 0;
+
+  documentCount.textContent =
+    `${indexedA + indexedB} indexed passage${indexedA + indexedB === 1 ? "" : "s"} in this comparison`;
+
+  updateURL();
+
+}
+
+
+/* =========================================================
+   EVENTS
+   ========================================================= */
+
+[topicSel, docASel, docBSel].forEach((select) => {
+
+  select.addEventListener("change", render);
+
+});
+
+
+/* =========================================================
+   INITIAL STATE
+   ========================================================= */
+
+loadURLState();
+
+if (!topicSel.value || !TOPICS[topicSel.value]) {
+  topicSel.value = "covenantGrace";
+}
+
 render();
+
 </script>
+
 </body>
 </html>
