@@ -7,146 +7,78 @@
 <link rel="stylesheet" href="styles.css">
 <style>
   /* Abrahamic covenant graph: two covenantal paths converge at one Christ card. */
-  .abrahamic-graph {
-    margin-top: 1.4rem;
-  }
+  .abrahamic-graph { margin-top: 1.4rem; }
 
-  .abrahamic-card-wrap {
-    position: relative;
-    z-index: 2;
-  }
-
-  .abrahamic-split {
-    position: relative;
-    height: 2.5rem;
-  }
-
+  .abrahamic-split { position: relative; height: 2.5rem; }
   .abrahamic-split::before {
-    content: "";
-    position: absolute;
-    left: 50%;
-    top: 0;
-    height: 1.25rem;
+    content: ""; position: absolute; left: 50%; top: 0;
+    height: 1.25rem; border-left: 2px solid var(--teal-dim);
+  }
+  .abrahamic-split::after {
+    content: ""; position: absolute; left: 25%; right: 25%; top: 1.25rem;
+    border-top: 2px solid var(--teal-dim);
+  }
+  .abrahamic-split-stems { position: relative; height: 1.25rem; }
+  .abrahamic-split-stems::before {
+    content: ""; position: absolute; left: 25%; top: 0; bottom: 0;
+    border-left: 2px solid var(--teal-dim);
+  }
+  .abrahamic-split-stems::after {
+    content: ""; position: absolute; left: 75%; top: 0; bottom: 0;
     border-left: 2px solid var(--teal-dim);
   }
 
-  .abrahamic-split::after {
-    content: "";
-    position: absolute;
-    left: 25%;
-    right: 25%;
-    top: 1.25rem;
-    border-top: 2px solid var(--teal-dim);
-  }
-
-  .abrahamic-paths {
+  /* Explicit grid areas guarantee David and Christ share a row (for the
+     horizontal connector) and Christ sits in the same column as the
+     Gracious line (for vertical alignment) -- no percentage guessing. */
+  .abrahamic-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    position: relative;
+    column-gap: 1.5rem;
+    grid-template-areas:
+      "wlabel glabel"
+      "mosaic gline"
+      "david  christ";
   }
-
-  .abrahamic-path {
-    position: relative;
-    min-width: 0;
+  .wlabel, .glabel {
+    text-align: center; margin: 0 0 1rem; color: var(--parchment); font-weight: 600;
   }
+  .wlabel { grid-area: wlabel; }
+  .glabel { grid-area: glabel; }
+  .mosaic-cell { grid-area: mosaic; }
 
-  .abrahamic-path.works {
-    padding-right: 1.25rem;
-  }
-
-  .abrahamic-path.gracious {
-    padding-left: 1.25rem;
-  }
-
-  .abrahamic-path.works::after,
-  .abrahamic-path.gracious::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    width: 2px;
-    background: var(--teal-dim);
-    z-index: 1;
-  }
-
-  .abrahamic-path.works::after {
-    right: 0;
-  }
-
-  .abrahamic-path.gracious::after {
-    left: 0;
-  }
-
-  .abrahamic-path-label {
-    position: relative;
-    z-index: 3;
-    text-align: center;
-    margin: 0 0 1rem;
-    color: var(--parchment);
-    font-weight: 600;
-  }
-
-  .abrahamic-node {
-    position: relative;
-    z-index: 3;
-  }
-
-  .abrahamic-node + .abrahamic-node {
-    margin-top: 1.4rem;
-  }
-
-  /* David travels horizontally to the same point reached by the gracious path. */
-  .david-row {
-    position: relative;
-  }
-
-  .david-row::after {
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: calc(100% + 1.25rem);
-    width: calc(100% + 2.5rem);
-    border-top: 2px solid var(--teal-dim);
-    z-index: 2;
-  }
-
-  .christ-wrap {
-    position: relative;
-    margin-top: 1.4rem;
-    z-index: 5;
-  }
-
-  .christ-wrap::before {
-    content: "";
-    position: absolute;
-    left: 50%;
-    top: -1.4rem;
-    height: 1.4rem;
+  .gline-cell { grid-area: gline; position: relative; min-height: 2rem; }
+  .gline-cell::before {
+    content: ""; position: absolute; left: 50%; top: 0; bottom: 0;
     border-left: 2px solid var(--teal-dim);
   }
 
-  .christ-node {
-    position: relative;
-    z-index: 6;
+  .david-cell { grid-area: david; position: relative; margin-top: 1.4rem; }
+  .david-cell::after {
+    content: ""; position: absolute; top: 50%; left: 100%;
+    width: 1.5rem; border-top: 2px solid var(--teal-dim);
   }
 
-  .christ-node .card {
-    margin: 0;
+  .christ-cell { grid-area: christ; position: relative; margin-top: 1.4rem; }
+  .christ-cell::before {
+    content: ""; position: absolute; left: 50%; top: -1.4rem;
+    height: 1.4rem; border-left: 2px solid var(--teal-dim);
   }
+  .christ-node .card { margin: 0; }
 
   @media (max-width: 700px) {
-    .abrahamic-path.works {
-      padding-right: .7rem;
+    .abrahamic-grid {
+      grid-template-columns: 1fr;
+      grid-template-areas:
+        "wlabel"
+        "mosaic"
+        "david"
+        "glabel"
+        "gline"
+        "christ";
     }
-
-    .abrahamic-path.gracious {
-      padding-left: .7rem;
-    }
-
-    .david-row::after {
-      left: calc(100% + .7rem);
-      width: calc(100% + 1.4rem);
-    }
+    .david-cell::after { display: none; }
+    .gline-cell::before { display: none; }
   }
 </style>
 </head>
@@ -275,49 +207,45 @@
       </div>
 
       <div class="abrahamic-split" aria-hidden="true"></div>
+      <div class="abrahamic-split-stems" aria-hidden="true"></div>
 
-      <div class="abrahamic-paths">
-        <div class="abrahamic-path works">
-          <div class="abrahamic-path-label">Works</div>
+      <div class="abrahamic-grid">
+        <div class="wlabel">Works</div>
+        <div class="glabel">Gracious</div>
 
-          <div class="abrahamic-node">
-            <a class="card" href="covenants/mosaic.html">
-              <h2>The Mosaic Covenant</h2>
-              <p>Law given to a redeemed people, and its relationship to the promise already made to Abraham.</p>
-              <div class="card-tags">
-                <span class="card-tag"><b>Parties:</b> Israel</span>
-                <span class="card-tag"><b>Terms:</b> Works</span>
-                <span class="card-tag"><b>Promises:</b> Fulfills, typologically, the Abrahamic promises of a national offspring and the land</span>
-                <span class="card-tag"><b>Role:</b> Reveals The Covenant of Grace by types and shadows. Establishes the law and temple system defining Israel's terms for inhabiting the promised land.</span>
-              </div>
-              <span class="tagline-link" style="display:block; margin-top:0.8rem;">Dive deeper into the Mosaic Covenant &rarr;</span>
-            </a>
-          </div>
-
-          <div class="abrahamic-node david-row">
-            <a class="card" href="covenants/davidic.html">
-              <h2>The Davidic Covenant</h2>
-              <p>A promised king and an everlasting throne.</p>
-              <div class="card-tags">
-                <span class="card-tag"><b>Parties:</b> Israel</span>
-                <span class="card-tag"><b>Terms:</b> Works</span>
-                <span class="card-tag"><b>Promises:</b> Fulfills, typologically, the Abrahamic promise of a king from Abraham's line</span>
-                <span class="card-tag"><b>Role:</b> Reveals The Covenant of Grace by types and shadows. Establishes and preserves the Messianic line.</span>
-              </div>
-              <span class="tagline-link" style="display:block; margin-top:0.8rem;">Dive deeper into the Davidic Covenant &rarr;</span>
-            </a>
-          </div>
+        <div class="mosaic-cell">
+          <a class="card" href="covenants/mosaic.html">
+            <h2>The Mosaic Covenant</h2>
+            <p>Law given to a redeemed people, and its relationship to the promise already made to Abraham.</p>
+            <div class="card-tags">
+              <span class="card-tag"><b>Parties:</b> Israel</span>
+              <span class="card-tag"><b>Terms:</b> Works</span>
+              <span class="card-tag"><b>Promises:</b> Fulfills, typologically, the Abrahamic promises of a national offspring and the land</span>
+              <span class="card-tag"><b>Role:</b> Reveals The Covenant of Grace by types and shadows. Establishes the law and temple system defining Israel's terms for inhabiting the promised land.</span>
+            </div>
+            <span class="tagline-link" style="display:block; margin-top:0.8rem;">Dive deeper into the Mosaic Covenant &rarr;</span>
+          </a>
         </div>
+        <div class="gline-cell"></div>
 
-        <div class="abrahamic-path gracious">
-          <div class="abrahamic-path-label">Gracious</div>
+        <div class="david-cell">
+          <a class="card" href="covenants/davidic.html">
+            <h2>The Davidic Covenant</h2>
+            <p>A promised king and an everlasting throne.</p>
+            <div class="card-tags">
+              <span class="card-tag"><b>Parties:</b> Israel</span>
+              <span class="card-tag"><b>Terms:</b> Works</span>
+              <span class="card-tag"><b>Promises:</b> Fulfills, typologically, the Abrahamic promise of a king from Abraham's line</span>
+              <span class="card-tag"><b>Role:</b> Reveals The Covenant of Grace by types and shadows. Establishes and preserves the Messianic line.</span>
+            </div>
+            <span class="tagline-link" style="display:block; margin-top:0.8rem;">Dive deeper into the Davidic Covenant &rarr;</span>
+          </a>
         </div>
-      </div>
-
-      <div class="christ-wrap">
-        <div class="christ-node">
-          <div class="card">
-            <h2>Christ</h2>
+        <div class="christ-cell">
+          <div class="christ-node">
+            <div class="card">
+              <h2>Christ</h2>
+            </div>
           </div>
         </div>
       </div>
