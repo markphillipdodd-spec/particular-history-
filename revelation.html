@@ -67,18 +67,12 @@
   .christ-node .card { margin: 0; }
 
   @media (max-width: 700px) {
-    .abrahamic-grid {
-      grid-template-columns: 1fr;
-      grid-template-areas:
-        "wlabel"
-        "mosaic"
-        "david"
-        "glabel"
-        "gline"
-        "christ";
+    .abrahamic-grid { column-gap: 0.8rem; }
+    .mosaic-cell .card, .david-cell .card, .christ-cell .card {
+      padding: 0.85rem 0.7rem;
     }
-    .david-cell::after { display: none; }
-    .gline-cell::before { display: none; }
+    .mosaic-cell h2, .david-cell h2, .christ-cell h2 { font-size: 1.05rem; }
+    .david-cell::after { left: 100%; width: 0.8rem; }
   }
 </style>
 </head>
