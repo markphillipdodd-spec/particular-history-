@@ -185,16 +185,35 @@ DATA.forEach((d) => {
   `;
 
   const btn = node.querySelector('.node-btn');
+  const panel = node.querySelector('.panel');
+
   btn.addEventListener('click', () => {
     const isOpen = node.classList.contains('open');
+
     document.querySelectorAll('.node.open').forEach(n => {
-      if (n !== node){ n.classList.remove('open'); n.querySelector('.node-btn').setAttribute('aria-expanded','false'); }
+      if (n !== node){
+        n.classList.remove('open');
+        n.querySelector('.node-btn').setAttribute('aria-expanded','false');
+        n.querySelector('.panel').style.maxHeight = '';
+      }
     });
+
     node.classList.toggle('open', !isOpen);
     btn.setAttribute('aria-expanded', String(!isOpen));
+    // Measure the panel's actual content height rather than assuming a fixed
+    // value — narrow (mobile) viewports wrap text taller than desktop does,
+    // so a hard-coded max-height clips longer entries (or their "Read the
+    // Full Text" link) on phones even though they fit fine on desktop.
+    panel.style.maxHeight = !isOpen ? panel.scrollHeight + 'px' : '';
   });
 
   nodesEl.appendChild(node);
+});
+
+window.addEventListener('resize', () => {
+  document.querySelectorAll('.node.open .panel').forEach(p => {
+    p.style.maxHeight = p.scrollHeight + 'px';
+  });
 });
 </script>
 </body>
