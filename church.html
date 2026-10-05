@@ -145,6 +145,14 @@ DATA.forEach((d) => {
   node.className = 'node';
   node.style.setProperty('--dotcolor', color);
 
+  // Full-text links: one link per text. Entries with a "texts" list (e.g. Wycliffe)
+  // get one link per work, each jumping to its own section on the text page.
+  const textLinks = (d.texts || [{ title: 'the Full Text', hash: '' }]).map((t, i) => `
+        <a class="resource-item" href="texts/${d.slug}.html${t.hash ? '#' + t.hash : ''}" style="margin-top:${i === 0 ? '1rem' : '.5rem'};">
+          <span class="resource-meta">Primary source</span>
+          <span class="resource-title">Read ${t.title} &rarr;</span>
+        </a>`).join('');
+
   node.innerHTML = `
     <div class="dot"></div>
     <button class="node-btn" aria-expanded="false">
@@ -175,11 +183,7 @@ DATA.forEach((d) => {
           <span class="field-label">Downstream Influence</span>
           <div class="field-body">${d.influence}</div>
         </div>
-        ${d.slug !== 'wycliffe-lollards' ? `
-        <a class="resource-item" href="texts/${d.slug}.html" style="margin-top:1rem;">
-          <span class="resource-meta">Primary source</span>
-          <span class="resource-title">Read the Full Text &rarr;</span>
-        </a>` : ''}
+        ${textLinks}
       </div>
     </div>
   `;
