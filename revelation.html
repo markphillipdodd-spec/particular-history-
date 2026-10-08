@@ -8,7 +8,13 @@
 <style>
   /* Abrahamic covenant graph: two covenantal paths converge at one Christ card. */
   .old-covenant-block { margin-top: 1rem; }
-  .abrahamic-graph { margin-top: 1.4rem; --agap: 1.5rem; }
+  .abrahamic-graph {
+    margin-top: 1.4rem;
+    --agap: 1.5rem;
+    /* How far the Christ card is dropped so it straddles the Old/New boundary.
+       Increase to push it lower, decrease to raise it. */
+    --drop: 2rem;
+  }
 
   .abrahamic-split { position: relative; height: 2.5rem; }
   .abrahamic-split::before {
@@ -68,28 +74,42 @@
     border-left: 2px solid var(--teal-dim);
   }
 
-  /* Gracious line continues straight down alongside David, in its own column. */
+  /* Gracious line continues straight down alongside David, in its own column,
+     and runs on a further --drop so it still meets the top of the lowered Christ card. */
   .gline2-cell { grid-area: gline2; position: relative; }
   .gline2-cell::before {
     content: ""; position: absolute; left: 50%; top: 0; bottom: 0;
     border-left: 2px solid var(--teal-dim);
   }
+  .gline2-cell::after {
+    content: ""; position: absolute; left: 50%; top: 100%; height: var(--drop);
+    border-left: 2px solid var(--teal-dim);
+  }
 
   /* Elbow: leaves David's bottom-center, drops to the vertical middle of the
-     Christ card's row, then runs right to meet the middle of Christ's left border.
+     (lowered) Christ card, then runs right to meet the middle of Christ's left border.
      One element draws both segments so the corner is clean. */
   .connector-cell { grid-area: connector; position: relative; }
   .connector-cell::before {
-    content: ""; position: absolute; top: 0; height: 50%;
+    content: ""; position: absolute; top: 0; height: calc(50% + var(--drop));
     left: 50%; width: calc(50% + var(--agap));
     border-left: 2px solid var(--teal-dim);
     border-bottom: 2px solid var(--teal-dim);
   }
 
-  /* Christ lives only in the Gracious column. The Gracious line above ends
-     at the center of its top border. */
-  .christ-cell { grid-area: christ; position: relative; display: grid; }
+  /* Christ lives only in the Gracious column (same lateral position as before).
+     It is shifted down so it sits across the boundary between the Old Covenant
+     section above and the New Covenant card below. */
+  .christ-cell {
+    grid-area: christ; position: relative; display: grid;
+    transform: translateY(var(--drop));
+    z-index: 2;
+  }
   .christ-node .card { margin: 0; padding-top: 0.7rem; padding-bottom: 0.7rem; }
+
+  /* Room at the top of the New Covenant card for the lower half of Christ. */
+  .new-covenant-grid { margin-top: 1rem; }
+  .straddle-spacer { height: 1.8rem; }
 
   @media (max-width: 700px) {
     .abrahamic-graph { --agap: 0.8rem; }
@@ -251,8 +271,9 @@
     </div>
   </div>
 
-  <div class="card-grid" style="margin-top:1rem;">
+  <div class="card-grid new-covenant-grid">
     <a class="card" href="covenants/new-covenant.html">
+      <div class="straddle-spacer" aria-hidden="true"></div>
       <h2>The New Covenant</h2>
       <p>The covenant of grace fully disclosed in Christ &mdash; the point the Church path traces forward from Nicaea to 1689.</p>
       <div class="card-tags">
