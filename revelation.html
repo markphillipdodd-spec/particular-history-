@@ -108,7 +108,7 @@
   .christ-node .card { margin: 0; padding-top: 0.7rem; padding-bottom: 0.7rem; }
 
   /* Room at the top of the New Covenant card for the lower half of Christ. */
-  .new-covenant-grid { margin-top: 1rem; }
+  .new-covenant-grid { margin-top: 1rem; display: grid; grid-template-columns: 1fr; }
   .straddle-spacer { height: 1.8rem; }
 
   @media (max-width: 700px) {
@@ -288,5 +288,26 @@
 
   <footer class="site-footer">particular history</footer>
 </div>
+<script>
+  /* Centers the Christ card exactly on the top edge of the New Covenant card,
+     so half of it sits in each covenant, whatever the screen size. */
+  (function () {
+    var graph = document.querySelector('.abrahamic-graph');
+    var christ = document.querySelector('.christ-node .card');
+    var newCard = document.querySelector('.new-covenant-grid .card');
+    var spacer = document.querySelector('.straddle-spacer');
+    function align() {
+      graph.style.setProperty('--drop', '0px');
+      var c = christ.getBoundingClientRect();
+      var n = newCard.getBoundingClientRect();
+      graph.style.setProperty('--drop', (n.top - (c.top + c.height / 2)) + 'px');
+      spacer.style.height = (c.height / 2 + 16) + 'px';
+    }
+    window.addEventListener('load', align);
+    window.addEventListener('resize', align);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(align);
+    align();
+  })();
+</script>
 </body>
 </html>
