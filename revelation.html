@@ -310,6 +310,24 @@
       graph.style.setProperty('--drop', (n.top - (c.top + c.height / 2)) + 'px');
       spacer.style.height = (c.height / 2 + 16) + 'px';
     }
+    /* Make the Christ card fully opaque (same look, but nothing shows through),
+       so the lines and borders it crosses are hidden behind it. */
+    function rgba(c) {
+      var m = c.match(/[\d.]+/g) || [0, 0, 0, 0];
+      return [+m[0], +m[1], +m[2], m.length > 3 ? +m[3] : 1];
+    }
+    function solidify() {
+      var base = rgba(getComputedStyle(document.body).backgroundColor);
+      if (base[3] === 0) base = rgba(getComputedStyle(document.documentElement).backgroundColor);
+      if (base[3] === 0) base = [0, 0, 0, 1];
+      var card = rgba(getComputedStyle(christ).backgroundColor);
+      var a = card[3];
+      var out = [0, 1, 2].map(function (i) {
+        return Math.round(card[i] * a + base[i] * (1 - a));
+      });
+      christ.style.backgroundColor = 'rgb(' + out.join(',') + ')';
+    }
+    solidify();
     window.addEventListener('load', align);
     window.addEventListener('resize', align);
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(align);
