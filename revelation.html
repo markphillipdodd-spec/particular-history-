@@ -326,6 +326,16 @@
         return Math.round(card[i] * a + base[i] * (1 - a));
       });
       christ.style.backgroundColor = 'rgb(' + out.join(',') + ')';
+      christ.style.backgroundClip = 'border-box';
+      /* Same treatment for the colored outline around the card. */
+      var cs = getComputedStyle(christ);
+      ['Top', 'Right', 'Bottom', 'Left'].forEach(function (side) {
+        var b = rgba(cs['border' + side + 'Color']);
+        var mixed = [0, 1, 2].map(function (i) {
+          return Math.round(b[i] * b[3] + out[i] * (1 - b[3]));
+        });
+        christ.style['border' + side + 'Color'] = 'rgb(' + mixed.join(',') + ')';
+      });
     }
     solidify();
     window.addEventListener('load', align);
