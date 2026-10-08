@@ -325,21 +325,25 @@
       var base = rgba(getComputedStyle(document.body).backgroundColor);
       if (base[3] === 0) base = rgba(getComputedStyle(document.documentElement).backgroundColor);
       if (base[3] === 0) base = [0, 0, 0, 1];
-      var card = rgba(getComputedStyle(christ).backgroundColor);
-      var a = card[3];
-      var out = [0, 1, 2].map(function (i) {
-        return Math.round(card[i] * a + base[i] * (1 - a));
-      });
-      christ.style.backgroundColor = 'rgb(' + out.join(',') + ')';
-      christ.style.backgroundClip = 'border-box';
-      /* Same treatment for the colored outline around the card. */
-      var cs = getComputedStyle(christ);
-      ['Top', 'Right', 'Bottom', 'Left'].forEach(function (side) {
-        var b = rgba(cs['border' + side + 'Color']);
-        var mixed = [0, 1, 2].map(function (i) {
-          return Math.round(b[i] * b[3] + out[i] * (1 - b[3]));
+      var under = base;
+      /* Outer wrapper, gold-bordered node, and the green card inside it:
+         each is made opaque over the layer beneath it. */
+      [christ.parentElement.parentElement, christ.parentElement, christ].forEach(function (el) {
+        var cs = getComputedStyle(el);
+        var c = rgba(cs.backgroundColor);
+        var out = [0, 1, 2].map(function (i) {
+          return Math.round(c[i] * c[3] + under[i] * (1 - c[3]));
         });
-        christ.style['border' + side + 'Color'] = 'rgb(' + mixed.join(',') + ')';
+        el.style.backgroundColor = 'rgb(' + out.join(',') + ')';
+        el.style.backgroundClip = 'border-box';
+        ['Top', 'Right', 'Bottom', 'Left'].forEach(function (side) {
+          var b = rgba(cs['border' + side + 'Color']);
+          var mixed = [0, 1, 2].map(function (i) {
+            return Math.round(b[i] * b[3] + out[i] * (1 - b[3]));
+          });
+          el.style['border' + side + 'Color'] = 'rgb(' + mixed.join(',') + ')';
+        });
+        under = [out[0], out[1], out[2], 1];
       });
     }
     solidify();
