@@ -86,12 +86,12 @@
     border-left: 2px solid var(--teal-dim);
   }
 
-  /* Elbow: leaves David's bottom-center, drops to the vertical middle of the
-     (lowered) Christ card, then runs right to meet the middle of Christ's left border.
+  /* Elbow: leaves David's bottom-center, drops to the middle of the upper half of the
+     (lowered) Christ card, then runs right to meet Christ's left border inside the Old Covenant.
      One element draws both segments so the corner is clean. */
   .connector-cell { grid-area: connector; position: relative; }
   .connector-cell::before {
-    content: ""; position: absolute; top: 0; height: calc(50% + var(--drop));
+    content: ""; position: absolute; top: 0; height: calc(25% + var(--drop));
     left: 50%; width: calc(50% + var(--agap));
     border-left: 2px solid var(--teal-dim);
     border-bottom: 2px solid var(--teal-dim);
@@ -105,7 +105,14 @@
     transform: translateY(var(--drop));
     z-index: 2;
   }
-  .christ-node .card { margin: 0; padding-top: 0.7rem; padding-bottom: 0.7rem; }
+  /* Tall card: the upper half sits in the Old Covenant (where David's line arrives),
+     the lower half sits in the New Covenant (where the word Christ is). */
+  .christ-node .card {
+    margin: 0; box-sizing: border-box; height: 6rem;
+    display: flex; align-items: flex-end;
+    padding-top: 0.7rem; padding-bottom: 0.9rem;
+  }
+  .christ-node .card h2 { margin: 0; }
 
   /* Room at the top of the New Covenant card for the lower half of Christ. */
   .new-covenant-grid { margin-top: 1rem; display: grid; grid-template-columns: 1fr; }
