@@ -7,7 +7,7 @@
 <link rel="stylesheet" href="styles.css">
 <style>
   /* Abrahamic covenant graph: two covenantal paths converge at one Christ card. */
-  .old-covenant-block { margin-top: 1rem; }
+  .old-covenant-block { margin-top: 1rem; position: relative; z-index: 2; }
   .abrahamic-graph {
     margin-top: 1.4rem;
     --agap: 1.5rem;
@@ -312,9 +312,14 @@
     }
     /* Make the Christ card fully opaque (same look, but nothing shows through),
        so the lines and borders it crosses are hidden behind it. */
+    var ctx = document.createElement('canvas').getContext('2d');
     function rgba(c) {
-      var m = c.match(/[\d.]+/g) || [0, 0, 0, 0];
-      return [+m[0], +m[1], +m[2], m.length > 3 ? +m[3] : 1];
+      ctx.clearRect(0, 0, 1, 1);
+      ctx.fillStyle = '#000';
+      ctx.fillStyle = c;
+      ctx.fillRect(0, 0, 1, 1);
+      var d = ctx.getImageData(0, 0, 1, 1).data;
+      return [d[0], d[1], d[2], d[3] / 255];
     }
     function solidify() {
       var base = rgba(getComputedStyle(document.body).backgroundColor);
