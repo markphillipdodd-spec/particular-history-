@@ -89,10 +89,10 @@
   /* Elbow: leaves David's bottom-center, drops to the middle of the upper half of the
      (lowered) Christ card, then runs right to meet Christ's left border inside the Old Covenant.
      One element draws both segments so the corner is clean. */
-  .connector-cell { grid-area: connector; position: relative; }
+  .connector-cell { grid-area: connector; position: relative; z-index: 3; }
   .connector-cell::before {
     content: ""; position: absolute; top: 0; height: calc(25% + var(--drop));
-    left: 50%; width: calc(50% + var(--agap));
+    left: 50%; width: calc(50% + var(--agap) + 2px);
     border-left: 2px solid var(--teal-dim);
     border-bottom: 2px solid var(--teal-dim);
   }
