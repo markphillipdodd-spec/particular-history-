@@ -19,13 +19,18 @@
   .abrahamic-split { position: relative; height: 2.5rem; }
   .abrahamic-split::before {
     content: ""; position: absolute; left: 50%; top: 0;
-    height: 1.25rem; border-left: 2px solid var(--teal-dim);
+    height: calc(1.25rem + 2px); border-left: 2px solid var(--teal-dim);
   }
+  /* Horizontal bar with a short leg at each end, so it joins the stems below
+     with square corners instead of leaving a gap. */
   .abrahamic-split::after {
-    content: ""; position: absolute; top: 1.25rem;
+    content: ""; position: absolute; top: 1.25rem; box-sizing: border-box;
+    height: 1.25rem;
     left: calc((100% - var(--agap)) / 4);
-    right: calc((100% - var(--agap)) / 4);
+    right: calc((100% - var(--agap)) / 4 - 2px);
     border-top: 2px solid var(--teal-dim);
+    border-left: 2px solid var(--teal-dim);
+    border-right: 2px solid var(--teal-dim);
   }
   .abrahamic-split-stems { position: relative; height: 1.25rem; }
   .abrahamic-split-stems::before {
@@ -92,7 +97,8 @@
   .connector-cell { grid-area: connector; position: relative; z-index: 3; }
   .connector-cell::before {
     content: ""; position: absolute; top: 0; height: calc(25% + var(--drop));
-    left: 50%; width: calc(50% + var(--agap) + 2px);
+    left: 50%; box-sizing: border-box;
+    width: var(--reach, calc(50% + var(--agap) + 2px));
     border-left: 2px solid var(--teal-dim);
     border-bottom: 2px solid var(--teal-dim);
   }
@@ -309,6 +315,13 @@
       var n = newCard.getBoundingClientRect();
       graph.style.setProperty('--drop', (n.top - (c.top + c.height / 2)) + 'px');
       spacer.style.height = (c.height / 2 + 16) + 'px';
+      /* Run David's line exactly to the outer edge of the gold border and over it. */
+      var node = christ.parentElement;
+      var gold = parseFloat(getComputedStyle(node).borderLeftWidth) > 0 ? node : christ;
+      var bw = parseFloat(getComputedStyle(gold).borderLeftWidth) || 2;
+      var cc = document.querySelector('.connector-cell').getBoundingClientRect();
+      var gr = gold.getBoundingClientRect();
+      graph.style.setProperty('--reach', (gr.left + bw - (cc.left + cc.width / 2)) + 'px');
     }
     /* Make the Christ card fully opaque (same look, but nothing shows through),
        so the lines and borders it crosses are hidden behind it. */
@@ -328,7 +341,7 @@
       var under = base;
       /* Outer wrapper, gold-bordered node, and the green card inside it:
          each is made opaque over the layer beneath it. */
-      [christ.parentElement.parentElement, christ.parentElement, christ].forEach(function (el) {
+      [christ.parentElement, christ].forEach(function (el) {
         var cs = getComputedStyle(el);
         var c = rgba(cs.backgroundColor);
         var out = [0, 1, 2].map(function (i) {
